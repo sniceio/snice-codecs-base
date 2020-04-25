@@ -1,0 +1,9 @@
+cmd:
+    exclude:
+        - ULR-Flags
+        - ULA-Flags
+        - Visited-PLMN-Id
+    include:
+        - Hello
+        - World
+        - Nisse

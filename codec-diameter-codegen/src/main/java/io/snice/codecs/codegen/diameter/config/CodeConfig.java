@@ -38,10 +38,7 @@ public class CodeConfig {
 
     private static final Logger logger = LoggerFactory.getLogger(CodeConfig.class);
 
-    /**
-     * This is the validated root directory of pkts.io
-     */
-    private final Path pktsIoRootDir;
+    private final Optional<Path> pktsIoRootDir;
 
     private final Settings avpSettings;
     private final Settings cmdSettings;
@@ -52,7 +49,7 @@ public class CodeConfig {
         return new Builder();
     }
 
-    private CodeConfig(final Path pktsIoRootDir,
+    private CodeConfig(final Optional<Path> pktsIoRootDir,
                        final Settings avpSettings,
                        final Settings cmdSettings,
                        final Settings appSettings) {
@@ -314,17 +311,21 @@ public class CodeConfig {
         }
 
         public CodeConfig build() {
+            /*
             if (projectRoot == null) {
                 final Path path = locatePktsDirectory();
-                System.err.println("Parent directory: " + path);
                 withPktsIoRootDir(path);
             }
+            */
 
+            /*
             final Settings avp = new Settings("AVP", subdirs.get(AVP_MVN_DIR), classNameConverter, packageConfig.getAvpPackage(), avpGenerationConfig);
             final Settings cmd = new Settings("CMD", subdirs.get(CMD_MVN_DIR), classNameConverter, packageConfig.getCmdPackage(), cmdGenerationConfig);
             final Settings app = new Settings("APP", subdirs.get(APP_MVN_DIR), classNameConverter, packageConfig.getAppPackage(), appGenerationConfig);
 
-            return new CodeConfig(projectRoot, avp, cmd, app);
+            return new CodeConfig(Optional.ofNullable(projectRoot), avp, cmd, app);
+            */
+            return null;
         }
 
         private static void ensureDirectory(final Path dir) {

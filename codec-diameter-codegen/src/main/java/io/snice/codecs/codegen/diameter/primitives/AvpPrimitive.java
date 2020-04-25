@@ -1,9 +1,9 @@
 package io.snice.codecs.codegen.diameter.primitives;
 
+import io.snice.codecs.codec.diameter.avp.Vendor;
 import io.snice.codecs.codec.diameter.avp.AvpMandatory;
 import io.snice.codecs.codec.diameter.avp.AvpProtected;
 import io.snice.codecs.codec.diameter.avp.AvpVendor;
-import io.snice.codecs.codec.diameter.avp.Vendor;
 import io.snice.codecs.codegen.diameter.CodeGenParseException;
 import io.snice.codecs.codegen.diameter.DiameterCollector;
 import io.snice.codecs.codegen.diameter.Typedef;

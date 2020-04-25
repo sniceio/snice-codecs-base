@@ -9,14 +9,7 @@ public class Settings {
      */
     private final String name;
 
-    /**
-     * The root directory
-     */
-    private final Path rootDir;
-
     private final Path srcDir;
-
-    private final Path testDir;
 
     /**
      * The Java package name.
@@ -25,18 +18,16 @@ public class Settings {
 
     private final ClassNameConverter classNameConverter;
 
-    private final CodeConfig.GenerationConfig genConfig;
+    private final CodeConfig2.GenerationConfig genConfig;
 
     public Settings(final String name,
-                    final Path rootDir,
+                    final Path srcDir,
                     final ClassNameConverter converter,
                     final String packageName,
-                    final CodeConfig.GenerationConfig genConfig) {
+                    final CodeConfig2.GenerationConfig genConfig) {
         this.name = name;
         this.classNameConverter = converter;
-        this.rootDir = rootDir;
-        this.srcDir = rootDir.resolve("src/main/java");
-        this.testDir = rootDir.resolve("src/test/java");
+        this.srcDir = srcDir;
         this.packageName = packageName;
         this.genConfig = genConfig;
     }
@@ -59,10 +50,6 @@ public class Settings {
 
     public String getPackageName() {
         return packageName;
-    }
-
-    public Path getRootDir() {
-        return rootDir;
     }
 
     public Path getJavaSrcDir() {

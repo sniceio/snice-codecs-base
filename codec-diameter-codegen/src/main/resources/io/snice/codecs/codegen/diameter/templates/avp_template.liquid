@@ -3,12 +3,12 @@ package {{java.package}};
 {% if avp.type.interface != "Grouped" %}
 import io.snice.buffer.Buffer;
 import io.snice.buffer.Buffers; {% endif %}
-import io.snice.networking.codec.diameter.avp.Avp;
-import io.snice.networking.codec.diameter.avp.AvpMandatory;
-import io.snice.networking.codec.diameter.avp.AvpParseException;
-import io.snice.networking.codec.diameter.avp.AvpProtected;
-import io.snice.networking.codec.diameter.avp.FramedAvp;
-import io.snice.networking.codec.diameter.avp.Vendor;
+import io.snice.codecs.codec.diameter.avp.Avp;
+import io.snice.codecs.codec.diameter.avp.AvpMandatory;
+import io.snice.codecs.codec.diameter.avp.AvpParseException;
+import io.snice.codecs.codec.diameter.avp.AvpProtected;
+import io.snice.codecs.codec.diameter.avp.FramedAvp;
+import io.snice.codecs.codec.diameter.avp.Vendor;
 {% if avp.type.interface == "Grouped" %}
 import static io.snice.preconditions.PreConditions.assertCollectionNotEmpty;{% endif %}
 import static io.snice.preconditions.PreConditions.assertNotNull;

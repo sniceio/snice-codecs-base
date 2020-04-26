@@ -1,6 +1,8 @@
 package io.snice.codecs.codec.diameter;
 
 import io.snice.buffer.Buffer;
+import io.snice.buffer.ReadableBuffer;
+import io.snice.codecs.codec.diameter.impl.ImmutableDiameterHeader;
 
 /**
  *
@@ -70,12 +72,13 @@ public interface DiameterHeader {
      */
     boolean validate();
 
-    /*
-    static DiameterHeader frame(final ReadableBuffer buffer) throws DiameterParseException, IOException {
-        return DiameterParser.frameHeader(buffer);
+    static DiameterHeader frame(final ReadableBuffer buffer) throws DiameterParseException {
+        return ImmutableDiameterHeader.frame(buffer);
     }
-    */
 
+    static Builder of() {
+        return ImmutableDiameterHeader.of();
+    }
 
     interface Builder {
 

@@ -3,7 +3,10 @@ package io.snice.codecs.codec.diameter.avp;
 import io.snice.buffer.Buffer;
 import io.snice.buffer.ReadableBuffer;
 import io.snice.buffer.WritableBuffer;
+import io.snice.codecs.codec.diameter.DiameterFramer;
+import io.snice.codecs.codec.diameter.DiameterParseException;
 import io.snice.codecs.codec.diameter.avp.type.Enumerated;
+import io.snice.codecs.codec.diameter.avp.type.OctetString;
 
 /**
  * A {@link FramedAvp} is an AVP who has not been fully parsed, i.e., you only have access to the {@link AvpHeader}
@@ -14,9 +17,8 @@ public interface FramedAvp {
 
     String CANNOT_CAST_AVP_OF_TYPE = "Cannot cast AVP of type ";
 
-    static FramedAvp frame(final ReadableBuffer buffer) { // throws DiameterParseException {
-        // return DiameterParser.frameRawAvp(buffer);
-        return null;
+    static FramedAvp frame(final ReadableBuffer buffer) throws DiameterParseException {
+        return DiameterFramer.frameRawAvp(buffer);
     }
 
     /**
@@ -66,6 +68,10 @@ public interface FramedAvp {
      * @return
      */
     Avp ensure();
+
+    Avp<OctetString> asOctetStringAvp();
+
+    Avp<OctetString> asOctetStringAvp(boolean isEncodedAsTBCD);
 
     /**
      * Check if this AVP is an enumerated AVP.

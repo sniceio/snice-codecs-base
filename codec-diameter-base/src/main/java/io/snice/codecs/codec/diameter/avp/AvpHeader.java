@@ -3,6 +3,7 @@ package io.snice.codecs.codec.diameter.avp;
 import io.snice.buffer.Buffer;
 import io.snice.buffer.ReadableBuffer;
 import io.snice.buffer.WritableBuffer;
+import io.snice.codecs.codec.diameter.DiameterFramer;
 import io.snice.codecs.codec.diameter.avp.impl.ImmutableAvpHeader;
 
 import java.util.Optional;
@@ -16,8 +17,7 @@ import java.util.Optional;
 public interface AvpHeader {
 
     static AvpHeader frame(final ReadableBuffer buffer) { // throws DiameterParseException {
-        // return DiameterParser.frameAvpHeader(buffer);
-        return null;
+        return DiameterFramer.frameAvpHeader(buffer);
     }
 
     static Builder withCode(final long code) {

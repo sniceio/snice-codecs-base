@@ -2,9 +2,11 @@ package io.snice.codecs.codec.diameter.avp.impl;
 
 import io.snice.buffer.Buffer;
 import io.snice.buffer.WritableBuffer;
+import io.snice.codecs.codec.diameter.DiameterFramer;
 import io.snice.codecs.codec.diameter.avp.AvpHeader;
 import io.snice.codecs.codec.diameter.avp.Avp;
 import io.snice.codecs.codec.diameter.avp.FramedAvp;
+import io.snice.codecs.codec.diameter.avp.type.OctetString;
 
 public class ImmutableFramedAvp implements FramedAvp {
 
@@ -71,7 +73,15 @@ public class ImmutableFramedAvp implements FramedAvp {
 
     @Override
     public Avp ensure() {
-        // return DiameterParser.parseAvp(this);
+        // return DiameterFramer.parseAvp(this);
         return null;
+    }
+
+    public Avp<OctetString> asOctetStringAvp() {
+        return new DiameterOctetStringAvp(this);
+    }
+
+    public Avp<OctetString> asOctetStringAvp(boolean isEncodedAsTBCD) {
+        return new DiameterOctetStringAvp(this, isEncodedAsTBCD);
     }
 }

@@ -1,7 +1,6 @@
 package io.snice.codecs.plugin;
 
 import io.snice.codecs.codegen.diameter.CodeGen;
-import io.snice.codecs.codegen.diameter.config.CodeConfig;
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
@@ -13,10 +12,12 @@ import org.apache.maven.project.MavenProject;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.URI;
 import java.nio.file.FileSystem;
 import java.nio.file.FileSystemAlreadyExistsException;
 import java.nio.file.FileSystems;
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.HashMap;
@@ -54,11 +55,20 @@ public class DiameterMojo extends AbstractMojo {
 
         try {
             final var uri = getClass().getClassLoader().getResource("codegen.yml").toURI();
-            ensureFileSystem(uri);
-            final var conf = CodeGen.loadConfig(uri);
+            logger.info("Found here: " + uri);
+            final var fs = ensureFileSystem(uri);
+            final var path = Path.of(uri);
+            logger.info("Path: " + path);
+            final var is = Files.newInputStream(path);
+            logger.info("IS: " + is);
+
+            final var conf = CodeGen.loadConfig(is).copy();
+            conf.withWiresharkDictionaryDir(Path.of("/home/jonas/development/3rd-party/wireshark"));
+            conf.withSourceRoot(outputDirectory.toPath());
             // final var argparse = CodeGen.parse(path, "--wireshark", "/home/jonas/development/3rd-party/wireshark/diameter");
-            System.err.println(conf);
-        } catch (Exception e) {
+            final var codegen = CodeGen.of(conf.build());
+            codegen.execute();
+        } catch (final Exception e) {
             e.printStackTrace();
         }
 
@@ -67,7 +77,7 @@ public class DiameterMojo extends AbstractMojo {
         // logger.info(defaultConfigFile.toString());
     }
 
-    private FileSystem ensureFileSystem(final URI uri) {
+    public static FileSystem ensureFileSystem(final URI uri) {
         try {
             if ("jar".equals(uri.getScheme())) {
                 final var env = new HashMap<String, Object>();

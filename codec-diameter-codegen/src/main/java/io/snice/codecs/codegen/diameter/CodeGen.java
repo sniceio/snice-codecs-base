@@ -7,7 +7,6 @@ import io.snice.codecs.codec.diameter.avp.Vendor;
 import io.snice.codecs.codec.diameter.avp.type.DiameterType;
 import io.snice.codecs.codegen.diameter.config.Attributes;
 import io.snice.codecs.codegen.diameter.config.ClassNameConverter;
-import io.snice.codecs.codegen.diameter.config.CodeConfig;
 import io.snice.codecs.codegen.diameter.config.CodeConfig2;
 import io.snice.codecs.codegen.diameter.config.Settings;
 import io.snice.codecs.codegen.diameter.primitives.AvpPrimitive;
@@ -22,6 +21,7 @@ import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.nio.file.FileSystem;
@@ -73,7 +73,7 @@ public class CodeGen {
         this.avpSettings = avpSettings;
     }
 
-    private void execute() {
+    public void execute() {
         try {
             final Path dictionary = config.getWiresharkDictionaryRoot().get().resolve(DICTIONARY_FILE_NAME);
             logger.info("Parsing " + dictionary);
@@ -255,23 +255,27 @@ public class CodeGen {
     }
 
     public static CodeConfig2 loadConfig(final String config) throws IOException {
-        final ObjectMapper mapper = new ObjectMapper(new YAMLFactory());
         final Path path = Paths.get(config).toAbsolutePath();
+        return loadConfig(path);
+    }
+
+    public static CodeConfig2 loadConfig(final URI config) throws IOException {
+        final Path path = Paths.get(config).toAbsolutePath();
+        return loadConfig(path);
+    }
+
+    public static CodeConfig2 loadConfig(final Path path) throws IOException {
+        final ObjectMapper mapper = new ObjectMapper(new YAMLFactory());
         assertArgument(Files.exists(path), "The given config file does not exist (" + path + ")");
         assertArgument(Files.isRegularFile(path), "The given config file is not a regular file (" + path + ")");
-
         return mapper.readValue(path.toFile(), CodeConfig2.class);
     }
 
-
-    public static CodeConfig loadConfig(final URI config) throws IOException {
+    public static CodeConfig2 loadConfig(final InputStream stream) throws IOException {
         final ObjectMapper mapper = new ObjectMapper(new YAMLFactory());
-        final Path path = Paths.get(config);
-        assertArgument(Files.exists(path), "The given config file does not exist (" + path + ")");
-        assertArgument(Files.isRegularFile(path), "The given config file is not a regular file (" + path + ")");
-
-        return mapper.readValue(config.toURL(), CodeConfig.class);
+        return mapper.readValue(stream, CodeConfig2.class);
     }
+
 
     /**
      * @return

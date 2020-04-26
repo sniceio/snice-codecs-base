@@ -6,6 +6,7 @@ import io.snice.codecs.codec.diameter.avp.Avp;
 import io.snice.codecs.codec.diameter.avp.AvpHeader;
 import io.snice.codecs.codec.diameter.avp.FramedAvp;
 import io.snice.codecs.codec.diameter.avp.type.DiameterType;
+import io.snice.codecs.codec.diameter.avp.type.OctetString;
 
 public class ImmutableAvp<T extends DiameterType> implements Avp<T> {
 
@@ -45,6 +46,14 @@ public class ImmutableAvp<T extends DiameterType> implements Avp<T> {
     @Override
     public Avp ensure() {
         return raw.ensure();
+    }
+
+    public Avp<OctetString> asOctetStringAvp() {
+        return raw.asOctetStringAvp();
+    }
+
+    public Avp<OctetString> asOctetStringAvp(boolean isEncodedAsTBCD) {
+        return raw.asOctetStringAvp(isEncodedAsTBCD);
     }
 
     @Override

@@ -23,8 +23,7 @@ public class ClassNameConverterTest extends CodeGenTestBase {
 
     @Test
     public void testConvertElement() throws Exception {
-        final AvpPrimitive avp = load("avp001.xml").getAvp("User-Name").get();
-        final String className = converter.convert(avp.getName());
+        final String className = converter.convert("User-Name");
         assertThat(className, is("UserName"));
     }
 

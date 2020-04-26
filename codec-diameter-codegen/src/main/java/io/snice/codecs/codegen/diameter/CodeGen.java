@@ -3,7 +3,6 @@ package io.snice.codecs.codegen.diameter;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
 import io.snice.codecs.codec.diameter.avp.Vendor;
-import io.snice.codecs.codec.diameter.avp.type.DiameterType;
 import io.snice.codecs.codegen.diameter.config.Attributes;
 import io.snice.codecs.codegen.diameter.config.ClassNameConverter;
 import io.snice.codecs.codegen.diameter.config.CodeConfig2;
@@ -14,7 +13,6 @@ import io.snice.codecs.codegen.diameter.templates.AvpTemplate;
 import net.sourceforge.argparse4j.ArgumentParsers;
 import net.sourceforge.argparse4j.inf.ArgumentParser;
 import net.sourceforge.argparse4j.inf.ArgumentParserException;
-import net.sourceforge.argparse4j.inf.Namespace;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

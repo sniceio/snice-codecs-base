@@ -1,21 +1,6 @@
 package io.snice.codecs.codec.diameter.avp.type;
 
-import io.snice.buffer.ReadableBuffer;
-import io.snice.buffer.WritableBuffer;
-import io.snice.codecs.codec.diameter.DiameterTestBase;
-import io.snice.codecs.codec.diameter.avp.Avp;
-import io.snice.codecs.codec.diameter.avp.AvpHeader;
-import io.snice.codecs.codec.diameter.avp.AvpMandatory;
-import io.snice.codecs.codec.diameter.avp.AvpProtected;
-import io.snice.codecs.codec.diameter.avp.Vendor;
-import org.junit.Test;
-
-import java.util.List;
-
-import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.assertThat;
-
-public class GroupedTest extends DiameterTestBase {
+public class GroupedTest {
 
     /*
     @Test

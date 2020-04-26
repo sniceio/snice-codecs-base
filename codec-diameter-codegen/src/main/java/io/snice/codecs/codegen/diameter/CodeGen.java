@@ -2,7 +2,6 @@ package io.snice.codecs.codegen.diameter;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
-import io.snice.codecs.codec.diameter.avp.Avp;
 import io.snice.codecs.codec.diameter.avp.Vendor;
 import io.snice.codecs.codec.diameter.avp.type.DiameterType;
 import io.snice.codecs.codegen.diameter.config.Attributes;
@@ -142,15 +141,18 @@ public class CodeGen {
         avpAttributes.put("vendor", avp.getVendor().orElse(Vendor.NONE).toString());
 
         final Typedef typedef = avp.getTypedef();
-        final Class<? extends DiameterType> typeInterface =
+        final String typeInterface =
                 typedef.getImplementingInterface().orElseThrow(() -> new IllegalArgumentException("Unable to render AVP " + avp.getName()
                         + " because missing interface definition for the type " + typedef.getName()));
+        final String typeInterfaceFqdn = typedef.getImplementingInterfaceFqdn().orElseThrow(IllegalAccessError::new);
 
-        final Class<? extends Avp> typeClass =
+        final String typeClass =
                 typedef.getImplementingClass().orElseThrow(IllegalArgumentException::new);
+        final String typeClassFqdn =
+                typedef.getImplementingClassFqdn().orElseThrow(IllegalArgumentException::new);
 
-        avpTypeAttributes.put("class", typeClass.getSimpleName());
-        avpTypeAttributes.put("interface", typeInterface.getSimpleName());
+        avpTypeAttributes.put("class", typeClass);
+        avpTypeAttributes.put("interface", typeInterface);
 
         // Unfortunately, for ResultCode and ExperimentalResultCode we also have to stick the code
         // value at the end because there are overlapping enum names
@@ -186,8 +188,8 @@ public class CodeGen {
             avpAttributes.put("enum_switch", enumSwitch);
         }
 
-        imports.add(typeClass.getName());
-        imports.add(typeInterface.getName());
+        imports.add(typeClassFqdn);
+        imports.add(typeInterfaceFqdn);
 
         return new Attributes(className, avpSettings.getPackageName(), attributes);
     }

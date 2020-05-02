@@ -9,6 +9,7 @@ import io.snice.codecs.codegen.diameter.config.CodeConfig2;
 import io.snice.codecs.codegen.diameter.config.Settings;
 import io.snice.codecs.codegen.diameter.primitives.AvpPrimitive;
 import io.snice.codecs.codegen.diameter.primitives.EnumPrimitive;
+import io.snice.codecs.codegen.diameter.templates.AvpFramerTemplate;
 import io.snice.codecs.codegen.diameter.templates.AvpTemplate;
 import net.sourceforge.argparse4j.ArgumentParsers;
 import net.sourceforge.argparse4j.inf.ArgumentParser;
@@ -76,13 +77,14 @@ public class CodeGen {
             logger.info("Parsing " + dictionary);
             final WiresharkDictionaryReader reader = new WiresharkDictionaryReader(collector);
             reader.parse(dictionary);
-            renderAvps();
+            final var renderedAvps = renderAvps();
+            renderAvpFramer(renderedAvps);
         } catch (final Exception e) {
             e.printStackTrace();
         }
     }
 
-    private void renderAvps() throws IOException, URISyntaxException {
+    private List<Attributes> renderAvps() throws IOException, URISyntaxException {
         final Settings settings = avpSettings;
         final List<AvpPrimitive> avps;
         if (settings.renderAll()) {
@@ -93,12 +95,29 @@ public class CodeGen {
             avps = collector.getAvps().stream().filter(avp -> settings.isIncluded(avp.getName())).collect(Collectors.toList());
         }
 
+        final List<Attributes> renderedAvps = new ArrayList<>();
         for (final AvpPrimitive avp : avps) {
             final AvpTemplate template = AvpTemplate.load(avp);
             final Attributes attributes = createAvpConfig(avp);
+            renderedAvps.add(attributes);
+
             final String rendered = template.render(attributes.getAttributes());
             save(settings, attributes, rendered);
         }
+
+        return renderedAvps;
+    }
+
+    /**
+     * Based on the AVPs that we rendered, generate a framer for those.
+     */
+    private void renderAvpFramer(final List<Attributes> avps) throws IOException, URISyntaxException {
+        final AvpFramerTemplate template = AvpFramerTemplate.load();
+
+        // TODO: should be configurable
+        Attributes framerAttributes = new Attributes("AvpFramer", "io.snice.codecs.codec.diameter.avp", Map.of());
+        final String rendered = template.render(framerAttributes, avps);
+        save(avpSettings, framerAttributes, rendered);
     }
 
     public Attributes createAvpConfig(final AvpPrimitive avp) {

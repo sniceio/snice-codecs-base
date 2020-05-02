@@ -1,0 +1,25 @@
+package {{framer.package}};
+
+import io.snice.codecs.codec.diameter.avp.Avp;
+import io.snice.codecs.codec.diameter.avp.FramedAvp;
+{% for avp in avps %}
+import {{avp.attributes.java.package}}.{{ avp.attributes.java.class.name }};{% endfor %}
+
+import static io.snice.preconditions.PreConditions.assertNotNull;
+
+/**
+ * {{ javadoc.class }}
+ */
+public class {{framer.name}} {
+
+    public static Avp parseAvp(final FramedAvp raw) {
+
+        assertNotNull(raw);
+        switch ((int) raw.getCode()) { {% for avp in avps %}
+            case {{ avp.attributes.java.class.name }}.CODE:
+                return {{ avp.attributes.java.class.name }}.parse(raw);{% endfor %}
+            default:
+                throw new RuntimeException("AVP " + raw.getCode() + " has not yet been implemented");
+        }
+    }
+}

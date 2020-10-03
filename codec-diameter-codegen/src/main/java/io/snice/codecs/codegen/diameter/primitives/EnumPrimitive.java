@@ -33,9 +33,32 @@ public interface EnumPrimitive extends DiameterPrimitive {
         ctx.ensureElementName(NAME);
         // there are some bad values in the wireshark dictionary file.
         // Some spaces and also ' like in "Don't Care" enum value
-        final String name = ctx.getString("name").replace("-", "_").replace("(", "_").replace(")", "_").replace(" ", "_").replace("'", "").trim();
+        String original = manualPatches(ctx.getString("name"));
+        final String name = original.replace("-", "_").replace("(", "_")
+                .replace(")", "_").replace(" ", "_").replace("'", "")
+                .replace("/", "_")
+                .trim();
+
         final long code = ctx.getLong("code");
         return new Builder(ctx, name, code);
+    }
+
+    /**
+     * There are some values that are in conflict with their own Enum name.
+     * This will allow you to match on a particular Enum-value and change it
+     * to something else.
+     */
+    private static String manualPatches(final String original) {
+
+        // This enum value, whose Enum has the exact same name, is the only
+        // defined value for this enum. NOTE: if you were to change
+        // this name swap, you will change the API and as such, need to be
+        // coordinated.
+        if (original.equals("Roaming-Restricted-Due-To-Unsupported-Feature")) {
+            return "Roaming-Restricted-Due-To-Unsupported-Feature0";
+        }
+
+        return original;
     }
 
     class Builder extends DiameterSaxBuilder.BaseBuilder<EnumPrimitive> {

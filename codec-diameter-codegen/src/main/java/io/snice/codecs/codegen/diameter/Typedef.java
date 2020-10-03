@@ -11,7 +11,7 @@ public enum Typedef {
     UNSIGNED_64("Unsigned64", null, null, null),
     FLOAT_32("Float32", null, null, null),
     FLOAT_64("Float64", null, null, null),
-    TIME("Time", null, null, null),
+    TIME("Time", null, "Time", "TimeAvp"),
 
     UTF8_STRING("UTF8String", OCTET_STRING, "UTF8String", "DiameterUtf8StringAvp"),
     ENUMERATED("Enumerated", INTEGER_32, "Enumerated", "DiameterEnumeratedAvp"),

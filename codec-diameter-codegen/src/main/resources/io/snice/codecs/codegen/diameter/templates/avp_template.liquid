@@ -11,9 +11,11 @@ import io.snice.codecs.codec.diameter.avp.FramedAvp;
 import io.snice.codecs.codec.diameter.avp.Vendor;
 {% if avp.type.interface == "Grouped" %}
 import static io.snice.preconditions.PreConditions.assertCollectionNotEmpty;{% endif %}
+import io.snice.codecs.codec.diameter.avp.type.DiameterType;
 import static io.snice.preconditions.PreConditions.assertNotNull;
 import java.util.List;
 import java.util.Optional;
+import java.util.function.Function;
 {% for import in java.imports %}
 import {{ import }};{% endfor %}
 
@@ -24,6 +26,18 @@ import {{ import }};{% endfor %}
 public interface {{java.class.name}} extends Avp<{{avp.type.interface}}> {
 
     int CODE = {{avp.code}};
+
+    /**
+     * The parameterized type of this Avp.
+     *
+     * The main purpose for this field is simply that it is easier to do reflection
+     * magic on a field than work out a parameterized type on a generic interface.
+     */
+    Class<{{avp.type.interface}}> TYPE = {{avp.type.interface}}.class;
+
+    {% if avp.type.interface != "Enumerated" %}
+    Function<{{avp.type.interface}}, {{java.class.name}}> CREATOR = {{java.class.name}}::of;
+    {% endif %}
 
     {% if avp.type.interface == "Grouped" %}
     static {{java.class.name}} of(final Avp... avps) {

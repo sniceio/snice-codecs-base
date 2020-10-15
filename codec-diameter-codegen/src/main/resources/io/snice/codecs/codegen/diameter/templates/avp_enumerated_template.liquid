@@ -11,8 +11,10 @@ import io.snice.codecs.codec.diameter.avp.FramedAvp;
 import io.snice.codecs.codec.diameter.avp.Vendor;
 {% for import in java.imports %}
 import {{ import }};{% endfor %}
+import io.snice.codecs.codec.diameter.avp.type.DiameterType;
 
 import java.util.Optional;
+import java.util.function.Function;
 import static io.snice.preconditions.PreConditions.assertNotNull;
 
 /**
@@ -21,6 +23,19 @@ import static io.snice.preconditions.PreConditions.assertNotNull;
 public interface {{java.class.name}} extends Avp<{{avp.type.interface}}<{{java.class.name}}.Code>> {
 
     int CODE = {{avp.code}};
+
+    /**
+     * The parameterized type of this Avp.
+     *
+     * The main purpose for this field is simply that it is easier to do reflection
+     * magic on a field than work out a parameterized type on a generic interface.
+     */
+    Class<{{avp.type.interface}}> TYPE = {{avp.type.interface}}.class;
+
+    {% if avp.type.interface != "Enumerated" %}
+    Function<{{avp.type.interface}}, {{java.class.name}}> CREATOR = {{java.class.name}}::of;
+    {% endif %}
+
     {% for variable in avp.variable_definition %}
     {{ variable }}{% endfor %}
 

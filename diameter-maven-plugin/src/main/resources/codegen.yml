@@ -59,15 +59,11 @@ avp:
         - ULR-Flags
         - ULA-Flags
         - Visited-PLMN-Id
-        - Requested-EUTRAN-
-        - Authentication-Info
-        - Requested-UTRAN-
-        - GERAN-Authentication-Info
-        - Number-Of-Requested-
-        - Vectors
+        - Requested-EUTRAN-Authentication-Info
+        - Requested-UTRAN-GERAN-Authentication-Info
+        - Number-Of-Requested-Vectors
         - Re-Synchronization-Info
-        - Immediate-Response-
-        - Preferred
+        - Immediate-Response-Preferred
         - Authentication-Info
         - E-UTRAN-Vector
         - UTRAN-Vector
@@ -80,8 +76,7 @@ avp:
         - DSA-Flags
         - Context-Identifier
         - Subscriber-Status
-        - Operator-Determined-
-        - Barring
+        - Operator-Determined-Barring
         - Access-Restriction-Data
         - APN-OI-Replacement
         - All-APN-Configurations-Included-Indicator

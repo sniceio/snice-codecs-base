@@ -36,6 +36,14 @@ public interface {{java.class.name}} extends Avp<{{avp.type.interface}}<{{java.c
     Function<{{avp.type.interface}}, {{java.class.name}}> CREATOR = {{java.class.name}}::of;
     {% endif %}
 
+    /**
+     * Convenience method for getting the actual integer value of the underlying result code.
+     * If the underlying enum doesn't exist, then -1 will be returned.
+     */
+    default int getResultCode() {
+        return getAsEnum().map(Code::getCode).orElse(-1);
+    }
+
     {% for variable in avp.variable_definition %}
     {{ variable }}{% endfor %}
 

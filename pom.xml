@@ -43,7 +43,7 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <snice-commons.version>0.1.5-SNAPSHOT</snice-commons.version>
+        <snice-commons.version>0.1.5</snice-commons.version>
         <logback.version>1.2.3</logback.version>
         <slf4j.version>1.7.25</slf4j.version>
         <jackson-core.version>2.10.3</jackson-core.version>

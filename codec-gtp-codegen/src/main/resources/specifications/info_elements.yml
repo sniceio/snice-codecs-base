@@ -1,0 +1,822 @@
+- comment: ""
+  enum: RESERVED
+  extendable: false
+  friendly_name: Reserved
+  octets: -1
+  type: 0
+- comment: "Variable Length / 8.3"
+  enum: IMSI
+  extendable: false
+  friendly_name: International Mobile Subscriber Identity (IMSI)
+  octets: -1
+  type: 1
+- comment: "Variable Length / 8.4"
+  enum: CAUSE
+  extendable: false
+  friendly_name: Cause
+  octets: -1
+  type: 2
+- comment: "Variable Length / 8.5"
+  enum: RECOVERY
+  extendable: false
+  friendly_name: Recovery (Restart Counter)
+  octets: -1
+  type: 3
+- comment: "See 3GPP TS 29.280 [15]"
+  enum: STN_SR
+  extendable: false
+  friendly_name: STN-SR
+  octets: -1
+  type: 51
+- comment: "Variable Length / 8.6"
+  enum: APN
+  extendable: false
+  friendly_name: Access Point Name (APN)
+  octets: -1
+  type: 71
+- comment: "Fixed Length / 8.7"
+  enum: AMBR
+  extendable: false
+  friendly_name: Aggregate Maximum Bit Rate (AMBR)
+  octets: 8
+  type: 72
+- comment: "Extendable / 8.8"
+  enum: EBI
+  extendable: true
+  friendly_name: EPS Bearer ID (EBI)
+  octets: 1
+  type: 73
+- comment: "Variable Length / 8.9"
+  enum: IP_ADDRESS
+  extendable: false
+  friendly_name: IP Address
+  octets: -1
+  type: 74
+- comment: "Variable Length / 8.10"
+  enum: MEI
+  extendable: false
+  friendly_name: Mobile Equipment Identity (MEI)
+  octets: -1
+  type: 75
+- comment: "Variable Length / 8.11"
+  enum: MSISDN
+  extendable: false
+  friendly_name: MSISDN
+  octets: -1
+  type: 76
+- comment: "Extendable / 8.12"
+  enum: INDICATION
+  extendable: true
+  friendly_name: Indication
+  octets: 2
+  type: 77
+- comment: "Variable Length / 8.13"
+  enum: PCO
+  extendable: false
+  friendly_name: Protocol Configuration Options (PCO)
+  octets: -1
+  type: 78
+- comment: "Variable Length / 8.14"
+  enum: PAA
+  extendable: false
+  friendly_name: PDN Address Allocation (PAA)
+  octets: -1
+  type: 79
+- comment: "Extendable / 8.15"
+  enum: BEARER_QOS
+  extendable: true
+  friendly_name: Bearer LevelQuality of Service (Bearer QoS)
+  octets: 22
+  type: 80
+- comment: "Extendable / 8.16"
+  enum: FLOW_QOS
+  extendable: true
+  friendly_name: FlowQuality of Service (Flow QoS)
+  octets: 21
+  type: 81
+- comment: "Extendable / 8.17"
+  enum: RAT_TYPE
+  extendable: true
+  friendly_name: RAT Type
+  octets: 1
+  type: 82
+- comment: "Extendable / 8.18"
+  enum: SERVING_NETWORK
+  extendable: true
+  friendly_name: Serving Network
+  octets: 3
+  type: 83
+- comment: "Variable Length / 8.19"
+  enum: BEARER_TFT
+  extendable: false
+  friendly_name: EPS Bearer LevelTraffic Flow Template (Bearer TFT)
+  octets: -1
+  type: 84
+- comment: "Variable Length / 8.20"
+  enum: TAD
+  extendable: false
+  friendly_name: Traffic Aggregation Description (TAD)
+  octets: -1
+  type: 85
+- comment: "Extendable / 8.21"
+  enum: ULI
+  extendable: true
+  friendly_name: User Location Information (ULI)
+  octets: -1
+  type: 86
+- comment: "Extendable / 8.22"
+  enum: F_TEID
+  extendable: true
+  friendly_name: Fully Qualified Tunnel Endpoint Identifier (F-TEID)
+  octets: -1
+  type: 87
+- comment: "Variable Length / 8.23"
+  enum: TMSI
+  extendable: false
+  friendly_name: TMSI
+  octets: -1
+  type: 88
+- comment: "Variable Length / 8.24"
+  enum: GLOBAL_CN_ID
+  extendable: false
+  friendly_name: Global CN-Id
+  octets: -1
+  type: 89
+- comment: "Variable Length / 8.25"
+  enum: S103PDF
+  extendable: false
+  friendly_name: S103 PDN Data Forwarding Info (S103PDF)
+  octets: -1
+  type: 90
+- comment: "Variable Length/ 8.26"
+  enum: S1UDF
+  extendable: false
+  friendly_name: S1-U Data Forwarding Info (S1UDF)
+  octets: -1
+  type: 91
+- comment: "Extendable / 8.27"
+  enum: DELAY_VALUE
+  extendable: true
+  friendly_name: Delay Value
+  octets: 1
+  type: 92
+- comment: "Extendable / 8.28"
+  enum: BEARER_CONTEXT
+  extendable: true
+  friendly_name: Bearer Context
+  octets: -1
+  type: 93
+- comment: "Extendable / 8.29"
+  enum: CHARGING_ID
+  extendable: true
+  friendly_name: Charging ID
+  octets: 4
+  type: 94
+- comment: "Extendable / 8.30"
+  enum: CHARGING_CHARACTERISTICS
+  extendable: true
+  friendly_name: Charging Characteristics
+  octets: 2
+  type: 95
+- comment: "Variable Length / 8.31"
+  enum: TRACE_INFORMATION
+  extendable: false
+  friendly_name: Trace Information
+  octets: -1
+  type: 96
+- comment: "Extendable / 8.32"
+  enum: BEARER_FLAGS
+  extendable: true
+  friendly_name: Bearer Flags
+  octets: 1
+  type: 97
+- comment: "Extendable /8.34"
+  enum: PDN_TYPE
+  extendable: true
+  friendly_name: PDN Type
+  octets: 1
+  type: 99
+- comment: "Extendable /8.35"
+  enum: PROCEDURE_TRANSACTION_ID
+  extendable: true
+  friendly_name: Procedure Transaction ID
+  octets: 1
+  type: 100
+- comment: "Extendable /8.38"
+  enum: MM_CONTEXT_GSM_KEY_TRIPLETS
+  extendable: true
+  friendly_name: MM Context (GSM Key and Triplets)
+  octets: -1
+  type: 103
+- comment: "Extendable/ 8.38"
+  enum: MM_CONTEXT_UMTS_KEY_USED_CIPHER_QUINTUPLETS
+  extendable: true
+  friendly_name: MM Context (UMTS Key, Used Cipher and Quintuplets)
+  octets: -1
+  type: 104
+- comment: "Extendable /8.38"
+  enum: MM_CONTEXT_GSM_KEY_USED_CIPHER_QUINTUPLETS
+  extendable: true
+  friendly_name: MM Context (GSM Key,Used Cipher and Quintuplets)
+  octets: -1
+  type: 105
+- comment: "Extendable /8.38"
+  enum: MM_CONTEXT_UMTS_KEY_QUINTUPLETS
+  extendable: true
+  friendly_name: MM Context (UMTS Key and Quintuplets)
+  octets: -1
+  type: 106
+- comment: "Extendable /8.38"
+  enum: MM_CONTEXT_EPS_SECURITY_CONTEXT_QUADRUPLETS_QUINTUPLETS
+  extendable: true
+  friendly_name: MM Context (EPS Security Context,Quadruplets and Quintuplets)
+  octets: -1
+  type: 107
+- comment: "Extendable /8.38"
+  enum: MM_CONTEXT_UMTS_KEY_QUADRUPLETS_QUINTUPLETS
+  extendable: true
+  friendly_name: MM Context (UMTS Key, Quadruplets and Quintuplets)
+  octets: -1
+  type: 108
+- comment: "Extendable /8.39"
+  enum: PDN_CONNECTION
+  extendable: true
+  friendly_name: PDN Connection
+  octets: -1
+  type: 109
+- comment: "Extendable /8.40"
+  enum: PDU_NUMBERS
+  extendable: true
+  friendly_name: PDU Numbers
+  octets: 9
+  type: 110
+- comment: "Variable Length/ 8.41"
+  enum: P_TMSI
+  extendable: false
+  friendly_name: P-TMSI
+  octets: -1
+  type: 111
+- comment: "Variable Length/ 8.42"
+  enum: P_TMSI_SIGNATURE
+  extendable: false
+  friendly_name: P-TMSI Signature
+  octets: -1
+  type: 112
+- comment: "Extendable / 8.43"
+  enum: HOP_COUNTER
+  extendable: true
+  friendly_name: Hop Counter
+  octets: 1
+  type: 113
+- comment: "Extendable/ 8.44"
+  enum: UE_TIME_ZONE
+  extendable: true
+  friendly_name: UE Time Zone
+  octets: 2
+  type: 114
+- comment: "Fixed Length/ 8.45"
+  enum: TRACE_REFERENCE
+  extendable: false
+  friendly_name: Trace Reference
+  octets: 6
+  type: 115
+- comment: "Variable Length/ 8.46"
+  enum: COMPLETE_REQUEST_MESSAGE
+  extendable: false
+  friendly_name: Complete Request Message
+  octets: -1
+  type: 116
+- comment: "Variable Length/ 8.47"
+  enum: GUTI
+  extendable: false
+  friendly_name: GUTI
+  octets: -1
+  type: 117
+- comment: "Variable Length/ 8.48"
+  enum: F_CONTAINER
+  extendable: false
+  friendly_name: F-Container
+  octets: -1
+  type: 118
+- comment: "Variable Length/ 8.49"
+  enum: F_CAUSE
+  extendable: false
+  friendly_name: F-Cause
+  octets: -1
+  type: 119
+- comment: "Variable Length/ 8.50"
+  enum: PLMN_ID
+  extendable: false
+  friendly_name: PLMN ID
+  octets: -1
+  type: 120
+- comment: "Variable Length/ 8.51"
+  enum: TARGET_IDENTIFICATION
+  extendable: false
+  friendly_name: Target Identification
+  octets: -1
+  type: 121
+- comment: "Variable Length/ 8.53"
+  enum: PACKET_FLOW_ID
+  extendable: false
+  friendly_name: Packet Flow ID
+  octets: -1
+  type: 123
+- comment: "Fixed Length/ 8.54"
+  enum: RAB_CONTEXT
+  extendable: false
+  friendly_name: RAB Context
+  octets: 9
+  type: 124
+- comment: "Variable Length/ 8.55"
+  enum: SOURCE_RNC_PDCP_CONTEXT_INFO
+  extendable: false
+  friendly_name: Source RNC PDCP Context Info
+  octets: -1
+  type: 125
+- comment: "Extendable / 8.56"
+  enum: PORT_NUMBER
+  extendable: true
+  friendly_name: Port Number
+  octets: 2
+  type: 126
+- comment: "Extendable / 8.57"
+  enum: APN_RESTRICTION
+  extendable: true
+  friendly_name: APN Restriction
+  octets: 1
+  type: 127
+- comment: "Extendable / 8.58"
+  enum: SELECTION_MODE
+  extendable: true
+  friendly_name: Selection Mode
+  octets: 1
+  type: 128
+- comment: "Variable Length/ 8.59"
+  enum: SOURCE_IDENTIFICATION
+  extendable: false
+  friendly_name: Source Identification
+  octets: -1
+  type: 129
+- comment: "Variable Length/ 8.61"
+  enum: CHANGE_REPORTING_ACTION
+  extendable: false
+  friendly_name: Change Reporting Action
+  octets: -1
+  type: 131
+- comment: "Extendable / 8.62"
+  enum: FQ_CSID
+  extendable: true
+  friendly_name: Fully Qualified PDN Connection Set Identifier (FQ-CSID)
+  octets: -1
+  type: 132
+- comment: "Variable Length / 8.63"
+  enum: CHANNEL_NEEDED
+  extendable: false
+  friendly_name: Channel needed
+  octets: -1
+  type: 133
+- comment: "Variable Length / 8.64"
+  enum: EMLPP_PRIORITY
+  extendable: false
+  friendly_name: eMLPP Priority
+  octets: -1
+  type: 134
+- comment: "Extendable / 8.65"
+  enum: NODE_TYPE
+  extendable: true
+  friendly_name: Node Type
+  octets: 1
+  type: 135
+- comment: "Variable Length / 8.66"
+  enum: FQDN
+  extendable: false
+  friendly_name: Fully Qualified Domain Name (FQDN)
+  octets: -1
+  type: 136
+- comment: "Variable Length / 8.68"
+  enum: TI
+  extendable: false
+  friendly_name: Transaction Identifier (TI)
+  octets: -1
+  type: 137
+- comment: "Extendable / 8.69"
+  enum: MBMS_SESSION_DURATION
+  extendable: true
+  friendly_name: MBMS Session Duration
+  octets: 3
+  type: 138
+- comment: "Variable Length / 8.70"
+  enum: MBMS_SERVICE_AREA
+  extendable: false
+  friendly_name: MBMS Service Area
+  octets: -1
+  type: 139
+- comment: "Extendable / 8.71"
+  enum: MBMS_SESSION_IDENTIFIER
+  extendable: true
+  friendly_name: MBMS Session Identifier
+  octets: 1
+  type: 140
+- comment: "Extendable / 8.72"
+  enum: MBMS_FLOW_IDENTIFIER
+  extendable: true
+  friendly_name: MBMS Flow Identifier
+  octets: 2
+  type: 141
+- comment: "Extendable / 8.73"
+  enum: MBMS_IP_MULTICAST_DISTRIBUTION
+  extendable: true
+  friendly_name: MBMS IP Multicast Distribution
+  octets: -1
+  type: 142
+- comment: "Extendable / 8.74"
+  enum: MBMS_DISTRIBUTION_ACKNOWLEDGE
+  extendable: true
+  friendly_name: MBMS Distribution Acknowledge
+  octets: 1
+  type: 143
+- comment: "Fixed Length / 8.77"
+  enum: RFSP_INDEX
+  extendable: false
+  friendly_name: RFSP Index
+  octets: 2
+  type: 144
+- comment: "Extendable / 8.75"
+  enum: UCI
+  extendable: true
+  friendly_name: User CSG Information (UCI)
+  octets: 8
+  type: 145
+- comment: "Extendable / 8.76"
+  enum: CSG_INFORMATION_REPORTING_ACTION
+  extendable: true
+  friendly_name: CSG Information Reporting Action
+  octets: 1
+  type: 146
+- comment: "Extendable / 8.78"
+  enum: CSG_ID
+  extendable: true
+  friendly_name: CSG ID
+  octets: 4
+  type: 147
+- comment: "Extendable / 8.79"
+  enum: CMI
+  extendable: true
+  friendly_name: CSG Membership Indication (CMI)
+  octets: 1
+  type: 148
+- comment: "Fixed Length / 8.80"
+  enum: SERVICE_INDICATOR
+  extendable: false
+  friendly_name: Service indicator
+  octets: 1
+  type: 149
+- comment: "Fixed Length / 8.81"
+  enum: DETACH_TYPE
+  extendable: false
+  friendly_name: Detach Type
+  octets: 1
+  type: 150
+- comment: "Variable Length / 8.82"
+  enum: LDN
+  extendable: false
+  friendly_name: Local Distiguished Name (LDN)
+  octets: -1
+  type: 151
+- comment: "Extendable / 8.83"
+  enum: NODE_FEATURES
+  extendable: true
+  friendly_name: Node Features
+  octets: 1
+  type: 152
+- comment: "Extendable / 8.84"
+  enum: MBMS_TIME_TO_DATA_TRANSFER
+  extendable: true
+  friendly_name: MBMS Time to Data Transfer
+  octets: 1
+  type: 153
+- comment: "Extendable / 8.85"
+  enum: THROTTLING
+  extendable: true
+  friendly_name: Throttling
+  octets: 2
+  type: 154
+- comment: "Extendable / 8.86"
+  enum: ARP
+  extendable: true
+  friendly_name: Allocation/Retention Priority (ARP)
+  octets: 1
+  type: 155
+- comment: "Extendable / 8.87"
+  enum: EPC_TIMER
+  extendable: true
+  friendly_name: EPC Timer
+  octets: 1
+  type: 156
+- comment: "Extendable / 8.88"
+  enum: SIGNALLING_PRIORITY_INDICATION
+  extendable: true
+  friendly_name: Signalling Priority Indication
+  octets: 1
+  type: 157
+- comment: "Extendable / 8.89"
+  enum: TMGI
+  extendable: true
+  friendly_name: Temporary Mobile Group Identity (TMGI)
+  octets: 6
+  type: 158
+- comment: "Extendable / 8.90"
+  enum: ADDITIONAL_MM_CONTEXT_FOR_SRVCC
+  extendable: true
+  friendly_name: Additional MM context for SRVCC
+  octets: -1
+  type: 159
+- comment: "Extendable / 8.91"
+  enum: ADDITIONAL_FLAGS_FOR_SRVCC
+  extendable: true
+  friendly_name: Additional flags for SRVCC
+  octets: 1
+  type: 160
+- comment: "Extendable / 8.93"
+  enum: MDT_CONFIGURATION
+  extendable: true
+  friendly_name: MDT Configuration
+  octets: -1
+  type: 162
+- comment: "Extendable / 8.94"
+  enum: APCO
+  extendable: true
+  friendly_name: Additional Protocol Configuration Options (APCO)
+  octets: -1
+  type: 163
+- comment: "Extendable / 8.95"
+  enum: ABSOLUTE_TIME_OF_MBMS_DATA_TRANSFER
+  extendable: true
+  friendly_name: Absolute Time of MBMS Data Transfer
+  octets: 8
+  type: 164
+- comment: "Extendable / 8.96"
+  enum: E
+  extendable: true
+  friendly_name: H(e)NB Information Reporting
+  octets: 1
+  type: 165
+- comment: "Extendable / 8.97"
+  enum: IP4CP
+  extendable: true
+  friendly_name: IPv4 Configuration Parameters (IP4CP)
+  octets: 5
+  type: 166
+- comment: "Extendable / 8.98"
+  enum: CHANGE_TO_REPORT_FLAGS
+  extendable: true
+  friendly_name: Change to Report Flags
+  octets: 1
+  type: 167
+- comment: "Extendable / 8.99"
+  enum: ACTION_INDICATION
+  extendable: true
+  friendly_name: Action Indication
+  octets: 1
+  type: 168
+- comment: "Extendable / 8.100"
+  enum: TWAN_IDENTIFIER
+  extendable: true
+  friendly_name: TWAN Identifier
+  octets: -1
+  type: 169
+- comment: "Extendable / 8.101"
+  enum: ULI_TIMESTAMP
+  extendable: true
+  friendly_name: ULI Timestamp
+  octets: 4
+  type: 170
+- comment: "Extendable / 8.102"
+  enum: MBMS_FLAGS
+  extendable: true
+  friendly_name: MBMS Flags
+  octets: 1
+  type: 171
+- comment: "Extendable / 8.103"
+  enum: RAN_NAS_CAUSE
+  extendable: true
+  friendly_name: RAN/NAS Cause
+  octets: -1
+  type: 172
+- comment: "Extendable / 8.104"
+  enum: CN_OPERATOR_SELECTION_ENTITY
+  extendable: true
+  friendly_name: CN Operator Selection Entity
+  octets: 1
+  type: 173
+- comment: "Extendable / 8.105"
+  enum: TRUSTED_WLAN_MODE_INDICATION
+  extendable: true
+  friendly_name: Trusted WLAN Mode Indication
+  octets: 1
+  type: 174
+- comment: "Extendable / 8.106"
+  enum: NODE_NUMBER
+  extendable: true
+  friendly_name: Node Number
+  octets: -1
+  type: 175
+- comment: "Extendable / 8.107"
+  enum: NODE_IDENTIFIER
+  extendable: true
+  friendly_name: Node Identifier
+  octets: -1
+  type: 176
+- comment: "Extendable / 8.108"
+  enum: PRESENCE_REPORTING_AREA_ACTION
+  extendable: true
+  friendly_name: Presence Reporting Area Action
+  octets: -1
+  type: 177
+- comment: "Extendable / 8.109"
+  enum: PRESENCE_REPORTING_AREA_INFORMATION
+  extendable: true
+  friendly_name: Presence Reporting Area Information
+  octets: 4
+  type: 178
+- comment: "Extendable / 8.110"
+  enum: TWAN_IDENTIFIER_TIMESTAMP
+  extendable: true
+  friendly_name: TWAN Identifier Timestamp
+  octets: 4
+  type: 179
+- comment: "Extendable / 8.111"
+  enum: OVERLOAD_CONTROL_INFORMATION
+  extendable: true
+  friendly_name: Overload Control Information
+  octets: -1
+  type: 180
+- comment: "Extendable / 8.112"
+  enum: LOAD_CONTROL_INFORMATION
+  extendable: true
+  friendly_name: Load Control Information
+  octets: -1
+  type: 181
+- comment: "Fixed Length / 8.113"
+  enum: METRIC
+  extendable: false
+  friendly_name: Metric
+  octets: 1
+  type: 182
+- comment: "Fixed Length / 8.114"
+  enum: SEQUENCE_NUMBER
+  extendable: false
+  friendly_name: Sequence Number
+  octets: 4
+  type: 183
+- comment: "Extendable / 8.115"
+  enum: APN_AND_RELATIVE_CAPACITY
+  extendable: true
+  friendly_name: APN and Relative Capacity
+  octets: -1
+  type: 184
+- comment: "Extendable / 8.116"
+  enum: WLAN_OFFLOADABILITY_INDICATION
+  extendable: true
+  friendly_name: WLAN Offloadability Indication
+  octets: 1
+  type: 185
+- comment: "Extendable / 8.117"
+  enum: PAGING_AND_SERVICE_INFORMATION
+  extendable: true
+  friendly_name: Paging and Service Information
+  octets: -1
+  type: 186
+- comment: "Variable / 8.118"
+  enum: INTEGER_NUMBER
+  extendable: false
+  friendly_name: Integer Number
+  octets: -1
+  type: 187
+- comment: "Extendable / 8.119"
+  enum: MILLISECOND_TIME_STAMP
+  extendable: true
+  friendly_name: Millisecond Time Stamp
+  octets: 6
+  type: 188
+- comment: "Extendable / 8.120"
+  enum: MONITORING_EVENT_INFORMATION
+  extendable: true
+  friendly_name: Monitoring Event Information
+  octets: -1
+  type: 189
+- comment: "Extendable / 8.121"
+  enum: ECGI_LIST
+  extendable: true
+  friendly_name: ECGI List
+  octets: -1
+  type: 190
+- comment: "Extendable / 8.122"
+  enum: REMOTE_UE_CONTEXT
+  extendable: true
+  friendly_name: Remote UE Context
+  octets: -1
+  type: 191
+- comment: "Extendable / 8.123"
+  enum: REMOTE_USER_ID
+  extendable: true
+  friendly_name: Remote User ID
+  octets: -1
+  type: 192
+- comment: "Variable Length / 8.124"
+  enum: REMOTE_UE_IP_INFORMATION
+  extendable: false
+  friendly_name: Remote UE IP information
+  octets: -1
+  type: 193
+- comment: "Extendable / 8.125"
+  enum: CIOT_OPTIMIZATIONS_SUPPORT_INDICATION
+  extendable: true
+  friendly_name: CIoT Optimizations Support Indication
+  octets: 1
+  type: 194
+- comment: "Extendable / 8.126"
+  enum: SCEF_PDN_CONNECTION
+  extendable: true
+  friendly_name: SCEF PDN Connection
+  octets: -1
+  type: 195
+- comment: "Extendable / 8.127"
+  enum: HEADER_COMPRESSION_CONFIGURATION
+  extendable: true
+  friendly_name: Header Compression Configuration
+  octets: 4
+  type: 196
+- comment: "Variable Length / 8.128"
+  enum: EPCO
+  extendable: false
+  friendly_name: Extended Protocol Configuration Options (ePCO)
+  octets: -1
+  type: 197
+- comment: "Extendable / 8.129"
+  enum: SERVING_PLMN_RATE_CONTROL
+  extendable: true
+  friendly_name: Serving PLMN Rate Control
+  octets: 4
+  type: 198
+- comment: "Extendable / 8.130"
+  enum: COUNTER
+  extendable: true
+  friendly_name: Counter
+  octets: 5
+  type: 199
+- comment: "Extendable / 8.131"
+  enum: MAPPED_UE_USAGE_TYPE
+  extendable: true
+  friendly_name: Mapped UE Usage Type
+  octets: 2
+  type: 200
+- comment: "Extendable / 8.132"
+  enum: SECONDARY_RAT_USAGE_DATA_REPORT
+  extendable: true
+  friendly_name: Secondary RAT Usage Data Report
+  octets: 27
+  type: 201
+- comment: "Extendable / 8.133"
+  enum: UP_FUNCTION_SELECTION_INDICATION_FLAGS
+  extendable: true
+  friendly_name: UP Function Selection Indication Flags
+  octets: 1
+  type: 202
+- comment: "Extendable / 8.134"
+  enum: MAXIMUM_PACKET_LOSS_RATE
+  extendable: true
+  friendly_name: Maximum Packet Loss Rate
+  octets: 1
+  type: 203
+- comment: "Extendable / 8.135"
+  enum: APN_RATE_CONTROL_STATUS
+  extendable: true
+  friendly_name: APN Rate Control Status
+  octets: 20
+  type: 204
+- comment: "Extendable / 8.136"
+  enum: EXTENDED_TRACE_INFORMATION
+  extendable: true
+  friendly_name: Extended Trace Information
+  octets: -1
+  type: 205
+- comment: "Extendable / 8.137"
+  enum: MONITORING_EVENT_EXTENSION_INFORMATION
+  extendable: true
+  friendly_name: Monitoring Event Extension Information
+  octets: -1
+  type: 206
+- comment: "See NOTE 2"
+  enum: EXTENSION
+  extendable: false
+  friendly_name: Special IE type for IE Type Extension
+  octets: -1
+  type: 254
+- comment: "Variable Length /8.67"
+  enum: PRIVATE_EXTENSION
+  extendable: false
+  friendly_name: Private Extension
+  octets: -1
+  type: 255

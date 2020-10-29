@@ -1,6 +1,6 @@
 package io.snice.codecs.plugin;
 
-import io.snice.codecs.codegen.diameter.CodeGen;
+import io.snice.codecs.codegen.gtp.CodeGen;
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
@@ -12,27 +12,22 @@ import org.apache.maven.project.MavenProject;
 
 import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
 import java.net.URI;
 import java.nio.file.FileSystem;
 import java.nio.file.FileSystemAlreadyExistsException;
 import java.nio.file.FileSystems;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.HashMap;
-import java.util.Map;
 
 /**
  *
  * @author jonas@jonasborjesson.com
  */
 @Mojo(
-        name = "diameter",
+        name = "gtp",
         defaultPhase = LifecyclePhase.GENERATE_SOURCES,
         requiresDependencyResolution = ResolutionScope.COMPILE,
         requiresProject = true)
-public class DiameterMojo extends AbstractMojo {
+public class GtpMojo extends AbstractMojo {
 
     /**
      * The current Maven project.
@@ -43,33 +38,20 @@ public class DiameterMojo extends AbstractMojo {
     /**
      * Specify output directory where the Java files are generated.
      */
-    @Parameter(defaultValue = "${project.build.directory}/generated-sources/codec-diameter")
+    @Parameter(defaultValue = "${project.build.directory}/generated-sources/codec-gtp")
     private File outputDirectory;
 
 
     @Override
     public void execute() throws MojoExecutionException, MojoFailureException {
         final var logger = getLog();
-        logger.info("Generating Diameter Code apa2");
+        logger.info("Generating GTP Code");
         prepareOutputDirectory(outputDirectory);
 
         try {
-            final var uri = getClass().getClassLoader().getResource("codegen.yml").toURI();
-            logger.info("Found here: " + uri);
-            final var fs = ensureFileSystem(uri);
-            final var path = Path.of(uri);
-            logger.info("Path: " + path);
-            final var is = Files.newInputStream(path);
-            logger.info("IS: " + is);
-
-            final var conf = CodeGen.loadConfig(is).copy();
-            conf.withWiresharkDictionaryDir(Path.of("/home/jonas/development/3rd-party/wireshark"));
-            conf.withSourceRoot(outputDirectory.toPath());
-            // final var argparse = CodeGen.parse(path, "--wireshark", "/home/jonas/development/3rd-party/wireshark/diameter");
-            final var codegen = CodeGen.of(conf.build());
-            codegen.execute();
+            CodeGen.execute(outputDirectory.toPath());
         } catch (final Exception e) {
-            e.printStackTrace();
+            throw new MojoExecutionException("Unable to generate the code", e);
         }
     }
 

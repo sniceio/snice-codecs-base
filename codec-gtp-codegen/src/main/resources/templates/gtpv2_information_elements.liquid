@@ -9,10 +9,9 @@ package io.snice.networking.codec.gtp.gtpc.v2;
  */
 public enum Gtp2InfoElement {
 
-  {%- for element in elements -%}
+  {%- for element in elements %}
     {{element['enum']}}({{element['type']}}, "{{element['friendly_name']}}", {{element['extendable']}}, {{element['octets']}}){%- if element['type'] != 255 -%},{% else %};{%- endif -%}
-
-  {%- endfor -%}
+  {% endfor %}
 
     private final int typeAsDecimal;
     private final byte type;

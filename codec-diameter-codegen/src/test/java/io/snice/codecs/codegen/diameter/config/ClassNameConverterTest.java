@@ -1,7 +1,7 @@
 package io.snice.codecs.codegen.diameter.config;
 
+import io.snice.codecs.codegen.ClassNameConverter;
 import io.snice.codecs.codegen.diameter.CodeGenTestBase;
-import io.snice.codecs.codegen.diameter.primitives.AvpPrimitive;
 import org.junit.Before;
 import org.junit.Test;
 

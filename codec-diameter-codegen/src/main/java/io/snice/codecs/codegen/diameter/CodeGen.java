@@ -3,8 +3,8 @@ package io.snice.codecs.codegen.diameter;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
 import io.snice.codecs.codec.diameter.avp.Vendor;
+import io.snice.codecs.codegen.ClassNameConverter;
 import io.snice.codecs.codegen.diameter.config.Attributes;
-import io.snice.codecs.codegen.diameter.config.ClassNameConverter;
 import io.snice.codecs.codegen.diameter.config.CodeConfig2;
 import io.snice.codecs.codegen.diameter.config.Settings;
 import io.snice.codecs.codegen.diameter.primitives.AvpPrimitive;
@@ -22,16 +22,10 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.nio.file.FileSystem;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 import static io.snice.preconditions.PreConditions.assertArgument;
@@ -115,7 +109,7 @@ public class CodeGen {
         final AvpFramerTemplate template = AvpFramerTemplate.load();
 
         // TODO: should be configurable
-        Attributes framerAttributes = new Attributes("AvpFramer", "io.snice.codecs.codec.diameter.avp", Map.of());
+        final Attributes framerAttributes = new Attributes("AvpFramer", "io.snice.codecs.codec.diameter.avp", Map.of());
         final String rendered = template.render(framerAttributes, avps);
         save(avpSettings, framerAttributes, rendered);
     }

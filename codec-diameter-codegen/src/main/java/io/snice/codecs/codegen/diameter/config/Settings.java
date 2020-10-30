@@ -1,5 +1,7 @@
 package io.snice.codecs.codegen.diameter.config;
 
+import io.snice.codecs.codegen.ClassNameConverter;
+
 import java.nio.file.Path;
 
 public class Settings {

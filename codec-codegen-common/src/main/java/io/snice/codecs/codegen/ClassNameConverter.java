@@ -1,4 +1,4 @@
-package io.snice.codecs.codegen.diameter.config;
+package io.snice.codecs.codegen;
 
 /**
  * Simple interface that takes the name of a diameter element, such as an AVP, a command or application,

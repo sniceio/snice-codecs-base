@@ -1,0 +1,65 @@
+package io.snice.codecs.codec.gtp.gtpc.v2.tliv;
+
+import io.snice.buffer.Buffer;
+import io.snice.buffer.Buffers;
+import io.snice.codecs.codec.gtp.gtpc.v2.tliv.TypeLengthInstanceValue;
+import io.snice.codecs.codec.gtp.gtpc.v2.tliv.impl.BaseTliv;
+import io.snice.codecs.codec.gtp.gtpc.v2.tliv.impl.RawTypeLengthInstanceValue;
+import io.snice.codecs.codec.gtp.gtpc.v2.type.{{java.tliv.type}};
+import io.snice.codecs.codec.gtp.gtpc.v2.Gtp2InfoElement;
+
+import static io.snice.preconditions.PreConditions.assertArgument;
+import static io.snice.preconditions.PreConditions.assertNotNull;
+
+/**
+ * This file has been auto generated. Do not manually edit.
+ * Please see the readme file in the codegen directory
+ * for how to update and generate this file.
+ *
+ * @author jonas@jonasborjesson.com
+ */
+public interface {{java.tliv.name}} extends TypeLengthInstanceValue<{{java.tliv.type}}> {
+
+    Gtp2InfoElement TYPE = Gtp2InfoElement.{{java.tliv.enum}};
+
+    static {{java.tliv.name}} frame(final Buffer buffer) {
+        final var raw = RawTypeLengthInstanceValue.frame(buffer);
+        return frame(raw);
+    }
+
+    static {{java.tliv.name}} frame(final RawTypeLengthInstanceValue raw) {
+        assertNotNull(raw);
+        assertArgument(raw.getType() == {{java.tliv.name}}.TYPE.getType(), "The given raw TLIV is not an {{java.tliv.enum}}");
+        final var value = {{java.tliv.type}}.parse(raw.getValue().getBuffer());
+        return new Default{{java.tliv.name}}(value, raw);
+    }
+
+    static {{java.tliv.name}} ofValue(final Buffer buffer) {
+        final var value = {{java.tliv.type}}.parse(buffer);
+        throw new RuntimeException("Not yet implemented");
+    }
+
+    static {{java.tliv.name}} ofValue(final String buffer) {
+        return ofValue(Buffers.wrap(buffer));
+    }
+
+    @Override
+    default {{java.tliv.name}} ensure() {
+        return this;
+    }
+
+    class Default{{java.tliv.name}} extends BaseTliv<{{java.tliv.type}}> implements {{java.tliv.name}} {
+        private Default{{java.tliv.name}}({{java.tliv.type}} value, RawTypeLengthInstanceValue raw) {
+            super(value, raw);
+        }
+
+        public boolean is{{java.tliv.name}}() {
+            return true;
+        }
+
+        public {{java.tliv.name}} to{{java.tliv.name}}() {
+            return this;
+        }
+    }
+}
+

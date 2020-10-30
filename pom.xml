@@ -61,6 +61,7 @@
         <module>codec-diameter-base</module>
         <module>codec-diameter-codegen</module>
         <module>codec-gtp-codegen</module>
+        <module>codec-codegen-common</module>
         <module>diameter-maven-plugin</module>
         <module>gtp-maven-plugin</module>
     </modules>
@@ -97,6 +98,14 @@
             <dependency>
                 <groupId>io.snice.codecs</groupId>
                 <artifactId>codec-diameter-codegen</artifactId>
+                <version>${project.version}</version>
+                <type>jar</type>
+                <scope>compile</scope>
+            </dependency>
+
+            <dependency>
+                <groupId>io.snice.codecs</groupId>
+                <artifactId>codec-codegen-common</artifactId>
                 <version>${project.version}</version>
                 <type>jar</type>
                 <scope>compile</scope>
@@ -167,21 +176,19 @@
             </dependency>
 
             <!-- For Java8 data types support such as Optional-->
-            <!--
-                <dependency>
-                    <groupId>com.fasterxml.jackson.datatype</groupId>
-                    <artifactId>jackson-datatype-jdk8</artifactId>
-                    <version>${jackson.version}</version>
-                    <type>jar</type>
-                    <scope>compile</scope>
-                </dependency>
-    -->
+            <dependency>
+                <groupId>com.fasterxml.jackson.datatype</groupId>
+                <artifactId>jackson-datatype-jdk8</artifactId>
+                <version>${jackson-dataformat.version}</version>
+                <type>jar</type>
+                <scope>compile</scope>
+            </dependency>
 
             <!-- For Java8 date/time support such as Duration -->
             <dependency>
                 <groupId>com.fasterxml.jackson.datatype</groupId>
                 <artifactId>jackson-datatype-jsr310</artifactId>
-                <version>${jackson.version}</version>
+                <version>${jackson-dataformat.version}</version>
                 <type>jar</type>
                 <scope>compile</scope>
             </dependency>

@@ -10,6 +10,7 @@
   friendly_name: International Mobile Subscriber Identity (IMSI)
   octets: -1
   type: 1
+  type_impl: TbcdType
 - comment: "Variable Length / 8.4"
   enum: CAUSE
   extendable: false
@@ -64,6 +65,7 @@
   friendly_name: MSISDN
   octets: -1
   type: 76
+  type_impl: TbcdType
 - comment: "Extendable / 8.12"
   enum: INDICATION
   extendable: true

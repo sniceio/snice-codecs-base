@@ -18,6 +18,11 @@
     <dependencies>
 
         <dependency>
+            <groupId>io.snice.codecs</groupId>
+            <artifactId>codec-codegen-common</artifactId>
+        </dependency>
+
+        <dependency>
             <groupId>io.snice</groupId>
             <artifactId>snice-buffers</artifactId>
         </dependency>
@@ -43,6 +48,11 @@
         <dependency>
             <groupId>com.fasterxml.jackson.dataformat</groupId>
             <artifactId>jackson-dataformat-yaml</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.fasterxml.jackson.datatype</groupId>
+            <artifactId>jackson-datatype-jdk8</artifactId>
         </dependency>
 
         <!-- For rendering liquid template -->

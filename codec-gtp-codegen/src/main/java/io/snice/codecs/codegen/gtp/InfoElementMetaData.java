@@ -3,9 +3,11 @@ package io.snice.codecs.codegen.gtp;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
+import io.snice.codecs.codegen.ClassNameConverter;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 @JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
 public class InfoElementMetaData {
@@ -27,6 +29,9 @@ public class InfoElementMetaData {
 
     @JsonProperty
     private int type;
+
+    @JsonProperty
+    private final Optional<String> typeImpl = Optional.empty();
 
     public String getComment() {
         return comment;
@@ -50,6 +55,14 @@ public class InfoElementMetaData {
 
     public int getType() {
         return type;
+    }
+
+    public String getName() {
+        return ClassNameConverter.defaultConverter().convert(enumValue);
+    }
+
+    public Optional<String> getTypeImpl() {
+        return typeImpl;
     }
 
     public Map<String, Object> toAttributes() {

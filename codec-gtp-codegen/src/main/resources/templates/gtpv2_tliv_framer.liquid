@@ -1,0 +1,36 @@
+package io.snice.codecs.codec.gtp.gtpc.v2.tliv;
+
+import io.snice.buffer.Buffer;
+import io.snice.codecs.codec.gtp.GtpParseException;
+import io.snice.codecs.codec.gtp.gtpc.v2.type.GtpType;
+import io.snice.codecs.codec.gtp.gtpc.v2.tliv.impl.RawTypeLengthInstanceValue;
+
+/**
+ * This file has been auto generated. Do not manually edit.
+ * Please see the readme file in the codegen directory
+ * for how to update and generate this file.
+ *
+ * @author jonas@jonasborjesson.com
+ */
+public class TlivFramer {
+
+    public static TypeLengthInstanceValue<? extends GtpType> frame(final Byte b, final RawTypeLengthInstanceValue raw) {
+        switch (b) {
+  {%- for element in elements %}
+            case (byte){{element.type}}: return {{element.name}}.frame(raw);
+  {%- endfor %}
+            default:
+                throw new GtpParseException("Unknown GTP IE value");
+        }
+    }
+
+    public static TypeLengthInstanceValue<? extends GtpType> frame(final Byte b, final Buffer buffer) {
+        switch (b) {
+  {%- for element in elements %}
+            case (byte){{element.type}}: return {{element.name}}.frame(buffer);
+  {%- endfor %}
+            default:
+                throw new GtpParseException("Unknown GTP IE value");
+        }
+    }
+}

@@ -36,11 +36,14 @@ public interface {{java.tliv.name}} extends TypeLengthInstanceValue<{{java.tliv.
 
     static {{java.tliv.name}} ofValue(final Buffer buffer) {
         final var value = {{java.tliv.type}}.parse(buffer);
-        throw new RuntimeException("Not yet implemented");
+        final var raw = RawTypeLengthInstanceValue.create(TYPE, value);
+        return new Default{{java.tliv.name}}(value, raw);
     }
 
     static {{java.tliv.name}} ofValue(final String buffer) {
-        return ofValue(Buffers.wrap(buffer));
+        final var value = {{java.tliv.type}}.parse(buffer);
+        final var raw = RawTypeLengthInstanceValue.create(TYPE, value);
+        return new Default{{java.tliv.name}}(value, raw);
     }
 
     @Override

@@ -60,7 +60,6 @@ public class CodeGen {
         mapper.registerModule(module);
         mapper.registerModule(new Jdk8Module());
 
-
         final var list = new ArrayList<C>();
         final MappingIterator<C> it = mapper.readerFor(clz).readValues(getURL(file));
         it.forEachRemaining(list::add);

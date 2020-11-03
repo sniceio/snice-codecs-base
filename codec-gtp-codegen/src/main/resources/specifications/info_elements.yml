@@ -23,6 +23,7 @@
   friendly_name: Recovery (Restart Counter)
   octets: -1
   type: 3
+  type_impl: CounterType
 - comment: "See 3GPP TS 29.280 [15]"
   enum: STN_SR
   extendable: false
@@ -97,17 +98,19 @@
   octets: 21
   type: 81
 - comment: "Extendable / 8.17"
-  enum: RAT_TYPE
+  enum: RAT
   extendable: true
   friendly_name: RAT Type
   octets: 1
   type: 82
+  type_impl: RatType
 - comment: "Extendable / 8.18"
   enum: SERVING_NETWORK
   extendable: true
   friendly_name: Serving Network
   octets: 3
   type: 83
+  type_impl: TbcdType
 - comment: "Variable Length / 8.19"
   enum: BEARER_TFT
   extendable: false

@@ -12,7 +12,7 @@ import java.util.Map;
 public enum Gtp2MessageType {
 
   {%- for element in elements %}
-    {{element['message']}}({{element['type']}}, {{element['initial']}}, {{element['triggered']}}, "{{element['specification']}}"){%- if element['type'] != 236 -%},{% else %};{%- endif -%}
+    {{element['message']}}({{element['type']}}, {{element['request']}}, {{element['initial']}}, {{element['triggered']}}, "{{element['specification']}}"){%- if element['type'] != 236 -%},{% else %};{%- endif -%}
   {% endfor %}
 
     private static Map<Integer, Gtp2MessageType> byType = new HashMap<>();
@@ -26,17 +26,23 @@ public enum Gtp2MessageType {
     }
 
     private final int type;
+    private final boolean isRequest;
     private final boolean isInitial;
     private final boolean isTriggered;
 
-    Gtp2MessageType(final int type, final boolean isInitial, final boolean isTriggered, final String specification) {
+    Gtp2MessageType(final int type, final boolean isRequest, final boolean isInitial, final boolean isTriggered, final String specification) {
         this.type = type;
+        this.isRequest = isRequest;
         this.isInitial = isInitial;
         this.isTriggered = isTriggered;
     }
 
     public int getType() {
         return type;
+    }
+
+    public boolean isRequest() {
+        return isRequest;
     }
 
     public boolean isInitial() {

@@ -3,6 +3,7 @@
   specification: "29.274"
   triggered: false
   type: 0
+  request: false
 - initial: true
   message: ECHO_REQUEST
   specification: "29.274"
@@ -18,6 +19,7 @@
   specification: "29.274"
   triggered: true
   type: 3
+  request: true
 - initial: true
   message: CREATE_SESSION_REQUEST
   specification: "29.274"
@@ -83,31 +85,37 @@
   specification: "29.274"
   triggered: false
   type: 64
+  request: true
 - initial: false
   message: MODIFY_BEARER_FAILURE_INDICATION
   specification: "29.274"
   triggered: true
   type: 65
+  request: false
 - initial: true
   message: DELETE_BEARER_COMMAND
   specification: "29.274"
   triggered: false
   type: 66
+  request: true
 - initial: false
   message: DELETE_BEARER_FAILURE_INDICATION
   specification: "29.274"
   triggered: true
   type: 67
+  request: false
 - initial: true
   message: BEARER_RESOURCE_COMMAND
   specification: "29.274"
   triggered: false
   type: 68
+  request: true
 - initial: false
   message: BEARER_RESOURCE_FAILURE_INDICATION
   specification: "29.274"
   triggered: true
   type: 69
+  request: false
 - initial: true
   message: DOWNLINK_DATA_NOTIFICATION_FAILURE_INDICATION
   specification: "29.274"
@@ -118,16 +126,19 @@
   specification: "29.274"
   triggered: false
   type: 71
+  request: true
 - initial: true
   message: TRACE_SESSION_DEACTIVATION
   specification: "29.274"
   triggered: false
   type: 72
+  request: false
 - initial: true
   message: STOP_PAGING_INDICATION
   specification: "29.274"
   triggered: false
   type: 73
+  request: true
 - initial: true
   message: CREATE_BEARER_REQUEST
   specification: "29.274"
@@ -248,11 +259,13 @@
   specification: "29.274"
   triggered: false
   type: 141
+  request: true
 - initial: true
   message: RAN_INFORMATION_RELAY
   specification: "29.274"
   triggered: false
   type: 152
+  request: true
 - initial: true
   message: DETACH_NOTIFICATION
   specification: "29.274"
@@ -268,6 +281,7 @@
   specification: "29.274"
   triggered: false
   type: 151
+  request: true
 - initial: true
   message: ALERT_MME_NOTIFICATION
   specification: "29.274"
@@ -293,6 +307,7 @@
   specification: "29.274"
   triggered: false
   type: 157
+  request: true
 - initial: true
   message: UE_REGISTRATION_QUERY_REQUEST
   specification: "29.274"

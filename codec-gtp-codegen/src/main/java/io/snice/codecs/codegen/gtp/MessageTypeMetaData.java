@@ -5,11 +5,20 @@ import java.util.Map;
 
 public class MessageTypeMetaData {
 
+    private Boolean request;
     private boolean initial;
     private String message;
     private String specification;
     private boolean triggered;
     private int type;
+
+    public Boolean isRequest() {
+        return request;
+    }
+
+    public void isRequest(final boolean value) {
+        request = value;
+    }
 
     public boolean isInitial() {
         return initial;
@@ -33,6 +42,7 @@ public class MessageTypeMetaData {
 
     public Map<String, Object> toAttributes() {
         final Map<String, Object> attributes = new HashMap<>();
+        attributes.put("request", request);
         attributes.put("initial", initial);
         attributes.put("message", message);
         attributes.put("specification", specification);

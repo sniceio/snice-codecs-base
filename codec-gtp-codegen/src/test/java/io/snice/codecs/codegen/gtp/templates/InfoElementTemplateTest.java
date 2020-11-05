@@ -4,9 +4,7 @@ import io.snice.codecs.codegen.gtp.CodeGen;
 import org.hamcrest.CoreMatchers;
 import org.junit.Test;
 
-import java.util.HashMap;
-
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertThat;
 
 public class InfoElementTemplateTest {
 
@@ -15,6 +13,7 @@ public class InfoElementTemplateTest {
         final var template = InfoElementTemplate.load();
         final var ies = CodeGen.loadInfoElementMetaData();
         final String rendered = template.render(ies);
+        System.out.println(rendered);
         assertThat(rendered.length() > 0, CoreMatchers.is(true));
     }
 

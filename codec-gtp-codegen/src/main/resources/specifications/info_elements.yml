@@ -36,6 +36,7 @@
   friendly_name: Access Point Name (APN)
   octets: -1
   type: 71
+  type_impl: ApnType
 - comment: "Fixed Length / 8.7"
   enum: AMBR
   extendable: false
@@ -48,6 +49,7 @@
   friendly_name: EPS Bearer ID (EBI)
   octets: 1
   type: 73
+  type_impl: EbiType
 - comment: "Variable Length / 8.9"
   enum: IP_ADDRESS
   extendable: false
@@ -60,6 +62,7 @@
   friendly_name: Mobile Equipment Identity (MEI)
   octets: -1
   type: 75
+  type_impl: TbcdType # May not be entirely correct
 - comment: "Variable Length / 8.11"
   enum: MSISDN
   extendable: false
@@ -135,6 +138,7 @@
   friendly_name: Fully Qualified Tunnel Endpoint Identifier (F-TEID)
   octets: -1
   type: 87
+  type_impl: FTeidType
 - comment: "Variable Length / 8.23"
   enum: TMSI
   extendable: false
@@ -171,6 +175,7 @@
   friendly_name: Bearer Context
   octets: -1
   type: 93
+  type_impl: GroupedType
 - comment: "Extendable / 8.29"
   enum: CHARGING_ID
   extendable: true
@@ -196,11 +201,12 @@
   octets: 1
   type: 97
 - comment: "Extendable /8.34"
-  enum: PDN_TYPE
+  enum: PDN
   extendable: true
   friendly_name: PDN Type
   octets: 1
   type: 99
+  type_impl: PdnType
 - comment: "Extendable /8.35"
   enum: PROCEDURE_TRANSACTION_ID
   extendable: true

@@ -28,6 +28,7 @@ public class TlivTemplate {
         javaAttributes.put("tliv", tlivAttributes);
         tlivAttributes.put("name", converter.convert(ie.getEnumValue()));
         tlivAttributes.put("enum", ie.getEnumValue());
+        tlivAttributes.put("enum_value", ie.getType());
         tlivAttributes.put("type", ie.getTypeImpl().orElse("RawType"));
 
         return template.render(attributes);

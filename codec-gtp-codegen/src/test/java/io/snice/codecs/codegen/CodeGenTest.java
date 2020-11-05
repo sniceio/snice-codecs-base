@@ -26,8 +26,8 @@ public class CodeGenTest {
         assertMetaData(metaData.get(7), "EBI", true, 1, 73);
     }
 
-    private void assertMessageTypeMetaData(MessageTypeMetaData m, boolean isInitial, String message,
-                                           String specification, boolean isTriggered, int type) {
+    private void assertMessageTypeMetaData(final MessageTypeMetaData m, final boolean isInitial, final String message,
+                                           final String specification, final boolean isTriggered, final int type) {
         assertThat(m.isInitial(), is(isInitial));
         assertThat(m.getMessage(), is(message));
         assertThat(m.getSpecification(), is(specification));
@@ -35,7 +35,7 @@ public class CodeGenTest {
         assertThat(m.getType(), is(type));
     }
 
-    private void assertMetaData(InfoElementMetaData ie, String expectedEnum, boolean extendable, int octets, int type) {
+    private void assertMetaData(final InfoElementMetaData ie, final String expectedEnum, final boolean extendable, final int octets, final int type) {
         assertThat(ie.getEnumValue(), is(expectedEnum));
         assertThat(ie.isExtendable(), is(extendable));
         assertThat(ie.getOctets(), is(octets));

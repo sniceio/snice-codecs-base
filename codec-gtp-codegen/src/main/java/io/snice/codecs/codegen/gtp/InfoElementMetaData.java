@@ -69,6 +69,7 @@ public class InfoElementMetaData {
         final Map<String, Object> attributes = new HashMap<>();
         attributes.put("comment", comment);
         attributes.put("enum", enumValue);
+        attributes.put("enum_byte", getType());
         attributes.put("extendable", extendable);
         attributes.put("friendly_name", friendlyName);
         attributes.put("octets", octets);

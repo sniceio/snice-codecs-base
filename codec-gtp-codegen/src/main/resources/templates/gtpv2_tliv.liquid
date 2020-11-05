@@ -22,6 +22,12 @@ public interface {{java.tliv.name}} extends TypeLengthInstanceValue<{{java.tliv.
 
     Gtp2InfoElement TYPE = Gtp2InfoElement.{{java.tliv.enum}};
 
+    /**
+     * The raw byte value of the Info Element. Useful when writing switch statements
+     * since those needs a constant value.
+     */
+    int TYPE_VALUE = {{java.tliv.enum_value}};
+
     static {{java.tliv.name}} frame(final Buffer buffer) {
         final var raw = RawTypeLengthInstanceValue.frame(buffer);
         return frame(raw);
@@ -35,13 +41,16 @@ public interface {{java.tliv.name}} extends TypeLengthInstanceValue<{{java.tliv.
     }
 
     static {{java.tliv.name}} ofValue(final Buffer buffer) {
-        final var value = {{java.tliv.type}}.parse(buffer);
-        final var raw = RawTypeLengthInstanceValue.create(TYPE, value);
-        return new Default{{java.tliv.name}}(value, raw);
+        final var value = {{java.tliv.type}}.ofValue(buffer);
+        return ofValue(value);
     }
 
     static {{java.tliv.name}} ofValue(final String buffer) {
-        final var value = {{java.tliv.type}}.parse(buffer);
+        final var value = {{java.tliv.type}}.ofValue(buffer);
+        return ofValue(value);
+    }
+
+    static {{java.tliv.name}} ofValue(final {{java.tliv.type}} value) {
         final var raw = RawTypeLengthInstanceValue.create(TYPE, value);
         return new Default{{java.tliv.name}}(value, raw);
     }

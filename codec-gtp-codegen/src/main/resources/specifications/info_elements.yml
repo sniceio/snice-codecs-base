@@ -43,6 +43,7 @@
   friendly_name: Aggregate Maximum Bit Rate (AMBR)
   octets: 8
   type: 72
+  type_impl: AmbrType
 - comment: "Extendable / 8.8"
   enum: EBI
   extendable: true
@@ -88,18 +89,21 @@
   friendly_name: PDN Address Allocation (PAA)
   octets: -1
   type: 79
+  type_impl: PaaType
 - comment: "Extendable / 8.15"
   enum: BEARER_QOS
   extendable: true
   friendly_name: Bearer LevelQuality of Service (Bearer QoS)
   octets: 22
   type: 80
+  type_impl: BearerQosType
 - comment: "Extendable / 8.16"
   enum: FLOW_QOS
   extendable: true
   friendly_name: FlowQuality of Service (Flow QoS)
   octets: 21
   type: 81
+  type_impl: QosType
 - comment: "Extendable / 8.17"
   enum: RAT
   extendable: true
@@ -113,7 +117,7 @@
   friendly_name: Serving Network
   octets: 3
   type: 83
-  type_impl: TbcdType
+  type_impl: MccMncType
 - comment: "Variable Length / 8.19"
   enum: BEARER_TFT
   extendable: false
@@ -132,6 +136,7 @@
   friendly_name: User Location Information (ULI)
   octets: -1
   type: 86
+  type_impl: UliType
 - comment: "Extendable / 8.22"
   enum: F_TEID
   extendable: true
@@ -357,12 +362,14 @@
   friendly_name: APN Restriction
   octets: 1
   type: 127
+  type_impl: CounterType
 - comment: "Extendable / 8.58"
   enum: SELECTION_MODE
   extendable: true
   friendly_name: Selection Mode
   octets: 1
   type: 128
+  type_impl: SelectionModeType
 - comment: "Variable Length/ 8.59"
   enum: SOURCE_IDENTIFICATION
   extendable: false

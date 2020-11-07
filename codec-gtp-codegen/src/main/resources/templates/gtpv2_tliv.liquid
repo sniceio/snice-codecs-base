@@ -45,13 +45,27 @@ public interface {{java.tliv.name}} extends TypeLengthInstanceValue<{{java.tliv.
         return ofValue(value);
     }
 
+    static {{java.tliv.name}} ofValue(final Buffer buffer, final int instance) {
+        final var value = {{java.tliv.type}}.ofValue(buffer);
+        return ofValue(value, instance);
+    }
+
     static {{java.tliv.name}} ofValue(final String buffer) {
         final var value = {{java.tliv.type}}.ofValue(buffer);
         return ofValue(value);
     }
 
+    static {{java.tliv.name}} ofValue(final String buffer, final int instance) {
+        final var value = {{java.tliv.type}}.ofValue(buffer);
+        return ofValue(value, instance);
+    }
+
     static {{java.tliv.name}} ofValue(final {{java.tliv.type}} value) {
-        final var raw = RawTypeLengthInstanceValue.create(TYPE, value);
+        return ofValue(value, 0);
+    }
+
+    static {{java.tliv.name}} ofValue(final {{java.tliv.type}} value, final int instance) {
+        final var raw = RawTypeLengthInstanceValue.create(TYPE, instance, value);
         return new Default{{java.tliv.name}}(value, raw);
     }
 

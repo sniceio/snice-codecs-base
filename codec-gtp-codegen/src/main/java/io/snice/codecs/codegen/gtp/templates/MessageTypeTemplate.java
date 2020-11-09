@@ -1,7 +1,7 @@
 package io.snice.codecs.codegen.gtp.templates;
 
 import io.snice.codecs.codegen.gtp.CodeGen;
-import io.snice.codecs.codegen.gtp.MessageTypeMetaData;
+import io.snice.codecs.codegen.gtp.Gtpv2MessageTypeMetaData;
 import liqp.Template;
 
 import java.util.ArrayList;
@@ -20,7 +20,7 @@ public class MessageTypeTemplate {
         this.template = template;
     }
 
-    public String render(final List<MessageTypeMetaData> ies) {
+    public String render(final List<Gtpv2MessageTypeMetaData> ies) {
         final var attributes = new HashMap<String, Object>();
         final var elements = new ArrayList<>();
         ies.forEach(ie -> {

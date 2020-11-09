@@ -2,7 +2,7 @@ package io.snice.codecs.codegen.gtp.templates;
 
 import io.snice.codecs.codegen.ClassNameConverter;
 import io.snice.codecs.codegen.gtp.CodeGen;
-import io.snice.codecs.codegen.gtp.InfoElementMetaData;
+import io.snice.codecs.codegen.gtp.Gtpv2InfoElementMetaData;
 import liqp.Template;
 
 import java.util.HashMap;
@@ -20,7 +20,7 @@ public class TlivTemplate {
         this.template = template;
     }
 
-    public String render(final ClassNameConverter converter, final InfoElementMetaData ie) {
+    public String render(final ClassNameConverter converter, final Gtpv2InfoElementMetaData ie) {
         final var attributes = new HashMap<String, Object>();
         final Map<String, Object> javaAttributes = new HashMap<>();
         final Map<String, Object> tlivAttributes = new HashMap<>();

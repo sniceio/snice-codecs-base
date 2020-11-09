@@ -3,7 +3,7 @@ package io.snice.codecs.codegen.gtp;
 import java.util.HashMap;
 import java.util.Map;
 
-public class MessageTypeMetaData {
+public class Gtpv2MessageTypeMetaData {
 
     private Boolean request;
     private boolean initial;

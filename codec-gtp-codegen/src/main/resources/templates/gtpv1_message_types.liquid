@@ -1,0 +1,55 @@
+package io.snice.codecs.codec.gtp.gtpc.v1;
+
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
+
+/**
+ * This file has been auto generated. Do not manually edit.
+ *
+ * @author jonas@jonasborjesson.com
+ */
+public enum Gtp1MessageType {
+
+  {%- for element in elements %}
+    {{element['message']}}({{element['type']}}, {{element['gtpc']}}, {{element['gtpu']}}, {{element['gtp_prime']}}, "{{element['reference']}}"){%- if element['type'] != 255 -%},{% else %};{%- endif -%}
+  {% endfor %}
+
+    private static Map<Integer, Gtp1MessageType> byType = new HashMap<>();
+
+    static {
+        Arrays.stream(Gtp1MessageType.values()).forEach(e -> byType.put(e.getType(), e));
+    }
+
+    public static Gtp1MessageType lookup(final int type) {
+        return byType.get(type);
+    }
+
+    private final int type;
+    private final boolean isGtpC;
+    private final boolean isGtpU;
+    private final boolean isGtpPrime;
+
+    Gtp1MessageType(final int type, final boolean isGtpC, final boolean isGtpU, final boolean isGtpPrime, final String reference) {
+        this.type = type;
+        this.isGtpC = isGtpC;
+        this.isGtpU = isGtpU;
+        this.isGtpPrime = isGtpPrime;
+    }
+
+    public int getType() {
+        return type;
+    }
+
+    public boolean isGtpC() {
+        return isGtpC;
+    }
+
+    public boolean isGtpU() {
+        return isGtpU;
+    }
+
+    public boolean isGtpPrime() {
+        return isGtpPrime;
+    }
+}

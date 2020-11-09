@@ -2,7 +2,7 @@ package io.snice.codecs.codegen.gtp.templates;
 
 import io.snice.codecs.codegen.ClassNameConverter;
 import io.snice.codecs.codegen.gtp.CodeGen;
-import io.snice.codecs.codegen.gtp.InfoElementMetaData;
+import io.snice.codecs.codegen.gtp.Gtpv2InfoElementMetaData;
 import liqp.Template;
 
 import java.util.ArrayList;
@@ -22,7 +22,7 @@ public class TlivFramerTemplate {
         this.template = template;
     }
 
-    public String render(final ClassNameConverter converter, final List<InfoElementMetaData> ies) {
+    public String render(final ClassNameConverter converter, final List<Gtpv2InfoElementMetaData> ies) {
         /*
         final var attributes = new HashMap<String, Object>();
         final var elements = new ArrayList<>();

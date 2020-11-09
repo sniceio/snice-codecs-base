@@ -10,7 +10,7 @@ import java.util.Map;
 import java.util.Optional;
 
 @JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
-public class InfoElementMetaData {
+public class Gtpv2InfoElementMetaData {
 
     @JsonProperty
     private String comment;

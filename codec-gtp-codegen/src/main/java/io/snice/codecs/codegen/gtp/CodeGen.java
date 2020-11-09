@@ -6,10 +6,7 @@ import com.fasterxml.jackson.databind.module.SimpleModule;
 import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
 import com.fasterxml.jackson.datatype.jdk8.Jdk8Module;
 import io.snice.codecs.codegen.ClassNameConverter;
-import io.snice.codecs.codegen.gtp.templates.InfoElementTemplate;
-import io.snice.codecs.codegen.gtp.templates.MessageTypeTemplate;
-import io.snice.codecs.codegen.gtp.templates.TlivFramerTemplate;
-import io.snice.codecs.codegen.gtp.templates.TlivTemplate;
+import io.snice.codecs.codegen.gtp.templates.*;
 import liqp.RenderSettings;
 import liqp.Template;
 import org.slf4j.Logger;
@@ -27,17 +24,23 @@ import java.util.List;
 
 public class CodeGen {
 
+    private static final String GTPC_V1_PACKAGE_NAME = "io.snice.codecs.codec.gtp.gtpc.v1";
+
     private static final String GTPC_V2_PACKAGE_NAME = "io.snice.codecs.codec.gtp.gtpc.v2";
     private static final String GTPC_V2_TLIV_PACKAGE_NAME = GTPC_V2_PACKAGE_NAME + ".tliv";
 
     private static final Logger logger = LoggerFactory.getLogger(CodeGen.class);
 
-    public static List<InfoElementMetaData> loadInfoElementMetaData() throws Exception {
-        return loadSpec(InfoElementMetaData.class, "specifications/info_elements.yml");
+    public static List<Gtpv2InfoElementMetaData> loadInfoElementMetaData() throws Exception {
+        return loadSpec(Gtpv2InfoElementMetaData.class, "specifications/info_elements.yml");
     }
 
-    public static List<MessageTypeMetaData> loadMessageTypeMetaData() throws Exception {
-        return loadSpec(MessageTypeMetaData.class, "specifications/message_types.yml");
+    public static List<Gtpv2MessageTypeMetaData> loadMessageTypeMetaData() throws Exception {
+        return loadSpec(Gtpv2MessageTypeMetaData.class, "specifications/message_types.yml");
+    }
+
+    public static List<Gtpv1MessageTypeMetaData> loadGtpv1MessageTypeMetaData() throws Exception {
+        return loadSpec(Gtpv1MessageTypeMetaData.class, "specifications/gtpv1_message_types.yml");
     }
 
     public static Template loadTemplate(final String file) throws Exception {
@@ -85,6 +88,10 @@ public class CodeGen {
 
         final String messagesTypes = MessageTypeTemplate.load().render(loadMessageTypeMetaData());
         save(outputDirectory, GTPC_V2_PACKAGE_NAME, "Gtp2MessageType", messagesTypes);
+
+        final String gtpv1MessagesTypes = Gtpv1MessageTypeTemplate.load().render(loadGtpv1MessageTypeMetaData());
+        save(outputDirectory, GTPC_V1_PACKAGE_NAME, "Gtp1MessageType", gtpv1MessagesTypes);
+
     }
 
     private static void save(final Path outpuDirectory, final String javaPackageName, final String javaName, final String content) {

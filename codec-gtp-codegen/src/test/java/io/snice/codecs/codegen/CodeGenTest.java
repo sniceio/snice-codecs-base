@@ -1,8 +1,8 @@
 package io.snice.codecs.codegen;
 
 import io.snice.codecs.codegen.gtp.CodeGen;
-import io.snice.codecs.codegen.gtp.InfoElementMetaData;
-import io.snice.codecs.codegen.gtp.MessageTypeMetaData;
+import io.snice.codecs.codegen.gtp.Gtpv2InfoElementMetaData;
+import io.snice.codecs.codegen.gtp.Gtpv2MessageTypeMetaData;
 import org.junit.Test;
 
 import static org.hamcrest.CoreMatchers.is;
@@ -26,7 +26,7 @@ public class CodeGenTest {
         assertMetaData(metaData.get(7), "EBI", true, 1, 73);
     }
 
-    private void assertMessageTypeMetaData(final MessageTypeMetaData m, final boolean isInitial, final String message,
+    private void assertMessageTypeMetaData(final Gtpv2MessageTypeMetaData m, final boolean isInitial, final String message,
                                            final String specification, final boolean isTriggered, final int type) {
         assertThat(m.isInitial(), is(isInitial));
         assertThat(m.getMessage(), is(message));
@@ -35,7 +35,7 @@ public class CodeGenTest {
         assertThat(m.getType(), is(type));
     }
 
-    private void assertMetaData(final InfoElementMetaData ie, final String expectedEnum, final boolean extendable, final int octets, final int type) {
+    private void assertMetaData(final Gtpv2InfoElementMetaData ie, final String expectedEnum, final boolean extendable, final int octets, final int type) {
         assertThat(ie.getEnumValue(), is(expectedEnum));
         assertThat(ie.isExtendable(), is(extendable));
         assertThat(ie.getOctets(), is(octets));

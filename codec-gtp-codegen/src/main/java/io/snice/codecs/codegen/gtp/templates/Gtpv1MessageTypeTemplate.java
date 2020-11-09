@@ -1,26 +1,26 @@
 package io.snice.codecs.codegen.gtp.templates;
 
 import io.snice.codecs.codegen.gtp.CodeGen;
-import io.snice.codecs.codegen.gtp.Gtpv2InfoElementMetaData;
+import io.snice.codecs.codegen.gtp.Gtpv1MessageTypeMetaData;
 import liqp.Template;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-public class InfoElementTemplate {
+public class Gtpv1MessageTypeTemplate {
 
     private final Template template;
 
-    public static InfoElementTemplate load() throws Exception {
-        return new InfoElementTemplate(CodeGen.loadTemplate("templates/gtpv2_information_elements.liquid"));
+    public static Gtpv1MessageTypeTemplate load() throws Exception {
+        return new Gtpv1MessageTypeTemplate(CodeGen.loadTemplate("templates/gtpv1_message_types.liquid"));
     }
 
-    private InfoElementTemplate(final Template template) {
+    private Gtpv1MessageTypeTemplate(final Template template) {
         this.template = template;
     }
 
-    public String render(final List<Gtpv2InfoElementMetaData> ies) {
+    public String render(final List<Gtpv1MessageTypeMetaData> ies) {
         final var attributes = new HashMap<String, Object>();
         final var elements = new ArrayList<>();
         ies.forEach(elements::add);

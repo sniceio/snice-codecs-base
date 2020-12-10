@@ -15,7 +15,7 @@
     <name>Snice Networking</name>
     <groupId>io.snice.codecs</groupId>
     <artifactId>codecs-base-parent</artifactId>
-    <version>0.0.4-SNAPSHOT</version>
+    <version>0.0.4</version>
     <packaging>pom</packaging>
     <description>Snice Codecs Base - The base of many Snice Codecs</description>
     <licenses>

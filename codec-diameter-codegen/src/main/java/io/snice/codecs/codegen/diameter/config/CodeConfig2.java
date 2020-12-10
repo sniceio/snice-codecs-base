@@ -8,6 +8,7 @@ import io.snice.codecs.codegen.ClassNameConverter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.net.URI;
 import java.nio.file.Path;
 import java.util.*;
 
@@ -22,11 +23,7 @@ public class CodeConfig2 {
 
     private final PackageConfig packageConfig;
     private final Optional<Path> sourceRoot;
-
-    /**
-     * The directory where we'll find all the wireshark dictionary files
-     */
-    private final Optional<Path> wiresharkDictionaryRoot;
+    private final URI dictionaryXml;
 
     private final Optional<GenerationConfig> avpPackageConfig;
     private final Optional<GenerationConfig> cmdPackageConfig;
@@ -38,17 +35,21 @@ public class CodeConfig2 {
     }
 
     private CodeConfig2(final PackageConfig packageConfig,
+                        final URI dictionaryXml,
                         final Optional<Path> sourceRoot,
-                        final Optional<Path> wiresharkDictionaryRoot,
                         final Optional<GenerationConfig> avpPackageConfig,
                         final Optional<GenerationConfig> cmdPackageConfig,
                         final Optional<GenerationConfig> appPackageConfig) {
         this.packageConfig = packageConfig;
-        this.wiresharkDictionaryRoot = wiresharkDictionaryRoot;
+        this.dictionaryXml = dictionaryXml;
         this.sourceRoot = sourceRoot;
         this.avpPackageConfig = avpPackageConfig;
         this.cmdPackageConfig = cmdPackageConfig;
         this.appPackageConfig = appPackageConfig;
+    }
+
+    public URI getDictionaryXml() {
+        return dictionaryXml;
     }
 
     public Optional<GenerationConfig> getAvpPackageConfig() {
@@ -67,9 +68,11 @@ public class CodeConfig2 {
         return sourceRoot;
     }
 
+    /*
     public Optional<Path> getWiresharkDictionaryRoot() {
         return wiresharkDictionaryRoot;
     }
+     */
 
     public PackageConfig getPackageConfig() {
         return packageConfig;
@@ -77,8 +80,8 @@ public class CodeConfig2 {
 
     public Builder copy() {
         final var builder = new Builder();
+        builder.withWiresharkDictionaryXml(dictionaryXml);
         sourceRoot.ifPresent(builder::withSourceRoot);
-        wiresharkDictionaryRoot.ifPresent(builder::withWiresharkDictionaryDir);
         appPackageConfig.ifPresent(builder::withAppGenerationConfig);
         cmdPackageConfig.ifPresent(builder::withCmdGenerationConfig);
         avpPackageConfig.ifPresent(builder::withAvpGenerationConfig);
@@ -179,7 +182,9 @@ public class CodeConfig2 {
          */
         private Path sourceRoot;
 
-        private Path wiresharkDictionaryRootDir;
+        private URI dictionaryXml;
+
+        private URI dictionaryDtd;
 
         /**
          * The diameter sub-directories.
@@ -214,9 +219,8 @@ public class CodeConfig2 {
             return this;
         }
 
-        @JsonProperty("wireshark")
-        public Builder withWiresharkDictionaryDir(final Path dir) {
-            this.wiresharkDictionaryRootDir = dir;
+        public Builder withWiresharkDictionaryXml(final URI xml) {
+            this.dictionaryXml = xml;
             return this;
         }
 
@@ -239,8 +243,8 @@ public class CodeConfig2 {
         }
 
         public CodeConfig2 build() {
-            return new CodeConfig2(packageConfig, Optional.ofNullable(sourceRoot),
-                    Optional.ofNullable(wiresharkDictionaryRootDir),avpGenerationConfig, cmdGenerationConfig, appGenerationConfig);
+            return new CodeConfig2(packageConfig, dictionaryXml, Optional.ofNullable(sourceRoot),
+                    avpGenerationConfig, cmdGenerationConfig, appGenerationConfig);
         }
 
     }

@@ -1,16 +1,13 @@
 package io.snice.codecs.codegen.diameter;
 
+import io.snice.codecs.codegen.FileSystemUtils;
 import io.snice.codecs.codegen.diameter.builders.AttributeContext;
 import io.snice.codecs.codegen.diameter.builders.DiameterSaxBuilder;
-import io.snice.codecs.codegen.diameter.primitives.ApplicationPrimitive;
-import io.snice.codecs.codegen.diameter.primitives.AvpPrimitive;
-import io.snice.codecs.codegen.diameter.primitives.EnumPrimitive;
-import io.snice.codecs.codegen.diameter.primitives.GavpPrimitive;
-import io.snice.codecs.codegen.diameter.primitives.GroupedPrimitive;
-import io.snice.codecs.codegen.diameter.primitives.TypePrimitive;
-import io.snice.codecs.codegen.diameter.primitives.TypedefPrimitive;
-import io.snice.codecs.codegen.diameter.primitives.UnknownPrimitive;
+import io.snice.codecs.codegen.diameter.primitives.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.xml.sax.Attributes;
+import org.xml.sax.InputSource;
 import org.xml.sax.Locator;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
@@ -20,15 +17,15 @@ import javax.xml.parsers.SAXParserFactory;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.URISyntaxException;
+import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Stack;
+import java.util.*;
 import java.util.function.Function;
 
 public class WiresharkDictionaryReader {
+
+    private static final Logger logger = LoggerFactory.getLogger(WiresharkDictionaryReader.class);
 
     private final SAXParserFactory saxFactory = SAXParserFactory.newInstance();
     private final SAXParser saxParser;
@@ -38,10 +35,6 @@ public class WiresharkDictionaryReader {
         saxFactory.setValidating(true);
         saxParser = saxFactory.newSAXParser();
         handler = new WiresharkXmlHandler(collector);
-    }
-
-    public void parse(final String file) throws IOException, SAXException {
-        saxParser.parse(new File(file), handler);
     }
 
     public void parse(final Path path) throws IOException, SAXException {
@@ -97,6 +90,39 @@ public class WiresharkDictionaryReader {
             // ignore these xml elements
             ignore.add("dictionary");
             ignore.add("base");
+        }
+
+        @Override
+        public InputSource resolveEntity(final String publicId, final String systemId) throws IOException, SAXException {
+            if (systemId != null && systemId.startsWith("file")) {
+                logger.info("Redirecting entity: " + publicId + " SystemId: " + systemId + " to use file from within the jar");
+                return redirectInputSource(publicId, systemId);
+            }
+
+            return null;
+        }
+
+        private InputSource redirectInputSource(final String publicId, final String systemId) throws IOException, SAXException {
+            try {
+                final var file = Path.of(systemId).getFileName().toString();
+                final var resource = getClass().getClassLoader().getResource(CodeGen.DICTIONARY_DIR + File.separator + file);
+                if (resource == null) {
+                    throw new SAXException("Unable to locate \"" + file + "\" within any of our JAR:s, which is " +
+                            "needed so that we can parse the dictionary.xml file for " +
+                            "generating our diameter base codec");
+                }
+                FileSystemUtils.ensureFileSystem(resource.toURI());
+                final var inputStream = Files.newInputStream(Path.of(resource.toURI()));
+
+                final var source = new InputSource(systemId);
+                source.setPublicId(publicId);
+                source.setByteStream(inputStream);
+
+                return source;
+            } catch (final URISyntaxException e) {
+                throw new IOException("Unable to convert/redirect " + systemId +
+                        " to a corresponding stream from within our jar files", e);
+            }
         }
 
         @Override

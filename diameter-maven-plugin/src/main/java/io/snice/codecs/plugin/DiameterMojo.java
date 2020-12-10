@@ -11,17 +11,10 @@ import org.apache.maven.plugins.annotations.ResolutionScope;
 import org.apache.maven.project.MavenProject;
 
 import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.URI;
-import java.nio.file.FileSystem;
-import java.nio.file.FileSystemAlreadyExistsException;
-import java.nio.file.FileSystems;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.HashMap;
-import java.util.Map;
+
+import static io.snice.codecs.codegen.FileSystemUtils.ensureFileSystem;
 
 /**
  *
@@ -50,42 +43,25 @@ public class DiameterMojo extends AbstractMojo {
     @Override
     public void execute() throws MojoExecutionException, MojoFailureException {
         final var logger = getLog();
-        logger.info("Generating Diameter Code apa2");
+        logger.info("Generating Diameter Code");
         prepareOutputDirectory(outputDirectory);
 
         try {
             final var uri = getClass().getClassLoader().getResource("codegen.yml").toURI();
-            logger.info("Found here: " + uri);
-            final var fs = ensureFileSystem(uri);
+            ensureFileSystem(uri);
             final var path = Path.of(uri);
-            logger.info("Path: " + path);
             final var is = Files.newInputStream(path);
-            logger.info("IS: " + is);
+
+            final var diameterXml = getClass().getClassLoader().getResource(CodeGen.DICTIONARY_DIR + File.separator + CodeGen.DICTIONARY_FILE_NAME).toURI();
 
             final var conf = CodeGen.loadConfig(is).copy();
-            conf.withWiresharkDictionaryDir(Path.of("/home/jonas/development/3rd-party/wireshark"));
+            conf.withWiresharkDictionaryXml(diameterXml);
             conf.withSourceRoot(outputDirectory.toPath());
-            // final var argparse = CodeGen.parse(path, "--wireshark", "/home/jonas/development/3rd-party/wireshark/diameter");
             final var codegen = CodeGen.of(conf.build());
             codegen.execute();
         } catch (final Exception e) {
-            e.printStackTrace();
+            throw new MojoExecutionException("Unable to generate the Diamter classes due to exception", e);
         }
-    }
-
-    public static FileSystem ensureFileSystem(final URI uri) {
-        try {
-            if ("jar".equals(uri.getScheme())) {
-                final var env = new HashMap<String, Object>();
-                env.put("create", "true");
-                return FileSystems.newFileSystem(uri, env);
-            }
-        } catch(final FileSystemAlreadyExistsException | IOException e) {
-            // ignore
-        }
-
-        return FileSystems.getDefault();
-
     }
 
     /**

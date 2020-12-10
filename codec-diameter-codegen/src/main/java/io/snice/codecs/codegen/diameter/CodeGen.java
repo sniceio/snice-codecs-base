@@ -28,14 +28,20 @@ import java.nio.file.Paths;
 import java.util.*;
 import java.util.stream.Collectors;
 
+import static io.snice.codecs.codegen.FileSystemUtils.ensureFileSystem;
 import static io.snice.preconditions.PreConditions.assertArgument;
 
 public class CodeGen {
 
     private static final Logger logger = LoggerFactory.getLogger(CodeGen.class);
 
-    private static final String DICTIONARY_FILE_NAME = "dictionary.xml";
-    private static final String DICTIONARY_DTD_FILE_NAME = "dictionary.dtd";
+    /**
+     * It is expected that all wireshark diameter xml files that we use for code generation
+     * are checked in and are all included within the final jar file and stored in the given
+     * directory.
+     */
+    public static final String DICTIONARY_DIR = "diameter";
+    public static final String DICTIONARY_FILE_NAME = "dictionary.xml";
 
     private final CodeConfig2 config;
     private final Settings avpSettings;
@@ -47,11 +53,9 @@ public class CodeGen {
                 .orElseThrow(() -> new IllegalArgumentException("You must specify the root directory to where " +
                         "all source code will be generated"));
 
-        final var dictionaryDir = ensureDictionaryDirectory(config.getWiresharkDictionaryRoot());
-
         final var actualConfig = config.copy()
                 .withSourceRoot(sourceRoot)
-                .withWiresharkDictionaryDir(dictionaryDir)
+                .withWiresharkDictionaryXml(config.getDictionaryXml())
                 .build();
 
         final ClassNameConverter classNameConverter = ClassNameConverter.defaultConverter();
@@ -67,10 +71,13 @@ public class CodeGen {
 
     public void execute() {
         try {
-            final Path dictionary = config.getWiresharkDictionaryRoot().get().resolve(DICTIONARY_FILE_NAME);
-            logger.info("Parsing " + dictionary);
+            ensureFileSystem(config.getDictionaryXml());
+            final var xml = Path.of(config.getDictionaryXml());
+            final var xmlInputStream = Files.newInputStream(xml);
+
             final WiresharkDictionaryReader reader = new WiresharkDictionaryReader(collector);
-            reader.parse(dictionary);
+            reader.parse(xmlInputStream);
+
             final var renderedAvps = renderAvps();
             renderAvpFramer(renderedAvps);
         } catch (final Exception e) {
@@ -218,12 +225,6 @@ public class CodeGen {
         final ArgumentParser parser = ArgumentParsers.newFor("codegen").build();
         parser.description("Code generator for diameter");
 
-        // the directory where we expect all the dicionary.xml files to live.
-        parser.addArgument("--wireshark")
-                .help("Directory where the wireshark diameter dictionary.xml files lives")
-                .metavar("<wireshark dir>")
-                .required(true);
-
         // configuration file with all our settings for e.g. where to generate the
         // code, if there are any that should be skipped etc etc.
         parser.addArgument("--config")
@@ -237,34 +238,6 @@ public class CodeGen {
                 .metavar("<source-dir>");
 
         return parser;
-    }
-
-    /**
-     * Ensure that the specified directory has all the various xml files etc.
-     *
-     * @param dir
-     * @return
-     * @throws IllegalArgumentException
-     */
-    private static Path ensureDictionaryDirectory(final Optional<Path> dir) throws IllegalArgumentException {
-        final Path root = dir.orElseThrow(() -> new IllegalArgumentException("You must specify the wireshark dictionary directory"));
-        assertArgument(Files.exists(root), "The given directory doesn't exist (" + root + ")");
-        assertArgument(Files.isDirectory(root), "The given directory is not a directory (" + root + ")");
-
-        final Path altRoot = root.resolve("diameter");
-
-        // if we can't find the dictionary.xml in the given directory, see if it exists in
-        // a sub-directory named "diameter" since that is the structure of wireshark.
-        for (final Path p : Arrays.asList(root, altRoot)) {
-            final Path xml = p.resolve(DICTIONARY_FILE_NAME);
-            final Path dtd = p.resolve(DICTIONARY_DTD_FILE_NAME);
-            if (Files.exists(xml) && Files.exists(dtd)) {
-                return p;
-            }
-        }
-
-        throw new IllegalArgumentException("Unable to locate the dictionary.xml and " +
-                "dictionary.dtd in the given directory. I even checked the subdirectory 'diameter' (" + altRoot + ")");
     }
 
     public static CodeConfig2 loadConfig(final String config) throws IOException {
@@ -317,16 +290,9 @@ public class CodeGen {
             final var result = parser.parseArgs(args);
             final var config = loadConfig(result.getString("config"));
             final var confBuilder = config.copy();
-
-            final var wireshark = result.getString("wireshark");
-            if (wireshark != null) {
-                confBuilder.withWiresharkDictionaryDir(Paths.get(wireshark));
-            }
-
             confBuilder.withSourceRoot(Paths.get(result.getString("source_dir")));
 
             return Optional.of(CodeGen.of(confBuilder.build()));
-
         } catch (final ArgumentParserException e) {
             parser.handleError(e);
         } catch (final IllegalArgumentException e) {

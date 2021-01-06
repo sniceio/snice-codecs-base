@@ -43,7 +43,7 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <snice-commons.version>0.1.5</snice-commons.version>
+        <snice-commons.version>0.1.8</snice-commons.version>
         <logback.version>1.2.3</logback.version>
         <slf4j.version>1.7.25</slf4j.version>
         <jackson-core.version>2.10.3</jackson-core.version>
@@ -257,6 +257,15 @@
                 <configuration>
                     <source>11</source>
                     <target>11</target>
+                </configuration>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-release-plugin</artifactId>
+                <version>3.0.0-M1</version>
+                <configuration>
+                    <tagNameFormat>snice-codecs-base-release-@{project.version}</tagNameFormat>
                 </configuration>
             </plugin>
 

@@ -1,0 +1,1 @@
+Some scripts that has been used to process the raw specification files in TSV format into yaml, which then is read by the codegen. Reason being using yaml it is quite easy to map it to Java objects using jackson etc.

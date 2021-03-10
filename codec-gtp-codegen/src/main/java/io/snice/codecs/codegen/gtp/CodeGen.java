@@ -25,6 +25,8 @@ import java.util.List;
 public class CodeGen {
 
     private static final String GTPC_V1_PACKAGE_NAME = "io.snice.codecs.codec.gtp.gtpc.v1";
+    private static final String GTPC_V1_TL_PACKAGE_NAME = GTPC_V1_PACKAGE_NAME + ".ie.tv";
+    private static final String GTPC_V1_TLV_PACKAGE_NAME = GTPC_V1_PACKAGE_NAME + ".ie.tlv";
 
     private static final String GTPC_V2_PACKAGE_NAME = "io.snice.codecs.codec.gtp.gtpc.v2";
     private static final String GTPC_V2_TLIV_PACKAGE_NAME = GTPC_V2_PACKAGE_NAME + ".tliv";
@@ -41,6 +43,10 @@ public class CodeGen {
 
     public static List<Gtpv1MessageTypeMetaData> loadGtpv1MessageTypeMetaData() throws Exception {
         return loadSpec(Gtpv1MessageTypeMetaData.class, "specifications/gtpv1_message_types.yml");
+    }
+
+    public static List<Gtpv1InfoElementMetaData> loadGtpv1InfoElementMetaData() throws Exception {
+        return loadSpec(Gtpv1InfoElementMetaData.class, "specifications/gtpv1_information_elements.yml");
     }
 
     public static Template loadTemplate(final String file) throws Exception {

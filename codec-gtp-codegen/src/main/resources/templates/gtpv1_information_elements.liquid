@@ -1,0 +1,58 @@
+package io.snice.codecs.codec.gtp.gtpc.v2;
+
+/**
+ * This file has been auto generated. Do not manually edit.
+ * Please see the readme file in the codegen directory
+ * for how to update and generate this file.
+ *
+ * @author jonas@jonasborjesson.com
+ */
+public enum Gtp1InfoElement {
+
+  {%- for element in elements %}
+    {{element['enumName']}}({{element['type']}}, "{{element['friendlyName']}}", {{element['octets']}}){%- if element['type'] != 255 -%},{% else %};{%- endif -%}
+  {% endfor %}
+
+    private final int typeAsDecimal;
+    private final byte type;
+
+    private final int octets;
+
+    private final String friendlyName;
+
+    private final Format format;
+
+
+    Gtp11nfoElement(final int type, final Format format, final String friendlyName, final int octets) {
+        this.typeAsDecimal = type;
+        this.type = (byte) type;
+    }
+
+    public int getTypeAsDecimal() {
+        return typeAsDecimal;
+    }
+
+    public byte getType() {
+        return type;
+    }
+
+    public int getOctets() {
+        return octets;
+    }
+
+    public String getFriendlyName() {
+        return friendlyName;
+    }
+
+    public boolean isFixed() {
+        return isFixed;
+    }
+
+    public boolean isVariable() {
+        return !isFixed;
+    }
+
+    public boolean isExtendable() {
+        return isExtendable;
+    }
+}

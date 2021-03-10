@@ -1,0 +1,54 @@
+package io.snice.codecs.codec.gtp.gtpc.v1;
+
+import io.snice.codecs.codec.gtp.v1.common.Format;
+
+import static io.snice.codecs.codec.gtp.v1.common.Format.TLV;
+import static io.snice.codecs.codec.gtp.v1.common.Format.TV;
+
+/**
+ * This file has been auto generated. Do not manually edit.
+ * Please see the readme file in the codegen directory
+ * for how to update and generate this file.
+ *
+ * @author jonas@jonasborjesson.com
+ */
+public enum Gtp1InfoElement {
+
+  {%- for element in elements %}
+    {{element['enumName']}}({{element['type']}}, {{element['format']}}, "{{element['friendlyName']}}", {{element['numberOfFixedOctets']}}){%- if element['type'] != 255 -%},{% else %};{%- endif -%}
+  {% endfor %}
+
+    private final int typeAsDecimal;
+    private final byte type;
+    private final int octets;
+    private final String friendlyName;
+    private final Format format;
+
+    Gtp1InfoElement(final int type, final Format format, final String friendlyName, final int octets) {
+        this.typeAsDecimal = type;
+        this.type = (byte) type;
+        this.format = format;
+        this.friendlyName = friendlyName;
+        this.octets = octets;
+    }
+
+    public int getTypeAsDecimal() {
+        return typeAsDecimal;
+    }
+
+    public byte getType() {
+        return type;
+    }
+
+    public int getOctets() {
+        return octets;
+    }
+
+    public Format getFormat() {
+        return format;
+    }
+
+    public String getFriendlyName() {
+        return friendlyName;
+    }
+}

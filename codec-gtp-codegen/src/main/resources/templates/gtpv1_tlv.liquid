@@ -1,0 +1,110 @@
+package {{java.package}};
+
+import io.snice.buffer.Buffer;
+import io.snice.buffer.Buffers;
+import io.snice.buffer.WritableBuffer;
+import io.snice.codecs.codec.gtp.gtpc.v2.tliv.TypeLengthInstanceValue;
+import io.snice.codecs.codec.gtp.gtpc.v2.tliv.impl.BaseTliv;
+import io.snice.codecs.codec.gtp.gtpc.v2.tliv.impl.RawTypeLengthInstanceValue;
+import io.snice.codecs.codec.gtp.gtpc.v2.type.CounterType;
+import io.snice.codecs.codec.gtp.gtpc.v2.Gtp2InfoElement;
+import io.snice.codecs.codec.gtp.gtpc.v1.Gtp1InfoElement;
+import io.snice.codecs.codec.gtp.gtpc.v2.type.CounterType;
+import io.snice.codecs.codec.gtp.gtpc.v2.type.RawType;
+
+import static io.snice.preconditions.PreConditions.assertArgument;
+import static io.snice.preconditions.PreConditions.assertNotNull;
+
+/**
+ * This file has been auto generated. Do not manually edit.
+ * Please see the readme file in the codegen directory
+ * for how to update and generate this file.
+ *
+ * @author jonas@jonasborjesson.com
+ */
+public interface {{java.tv.name}} extends TypeLengthValue<{{java.tv.type}}> {
+
+    Gtp1InfoElement TYPE = Gtp1InfoElement.{{java.tv.enum}};
+
+    /**
+     * The raw byte value of the Info Element. Useful when writing switch statements
+     * since those needs a constant value.
+     */
+    byte TYPE_VALUE = (byte){{java.tv.enum_value}};
+
+    int LENGTH = TYPE.getOctets();
+
+    static {{java.tv.name}} frame(final Buffer buffer) {
+        return frame(RawTypeLengthValue.frame(buffer));
+    }
+
+    static {{java.tv.name}} frame(final RawTypeLengthValue raw) {
+        assertNotNull(raw);
+        assertArgument(raw.getType() == TYPE_VALUE, "The given raw TV is not a " + TYPE);
+
+        {%- if java.tv.type == "RawType" %}
+        final var value = raw.getValue();
+        {% else %}
+        final var value = {{java.tv.type}}.parse(raw.getValue().getBuffer());
+        {% endif %}
+        return new Default{{java.tv.name}}(value, raw);
+    }
+
+    static {{java.tv.name}} ofValue(final Buffer buffer) {
+        final var value = {{java.tv.type}}.ofValue(buffer);
+        return ofValue(value);
+    }
+
+    static {{java.tv.name}} ofValue(final String buffer) {
+        final var value = {{java.tv.type}}.ofValue(buffer);
+        return ofValue(value);
+    }
+
+    static {{java.tv.name}} ofValue(final {{java.tv.type}} value) {
+        return ofValue(value);
+    }
+
+   {%- if java.tv.is_of_int_type  %}
+    static {{java.tv.name}} ofValue(final int value) {
+        final var buffer = WritableBuffer.of(1 + LENGTH).fastForwardWriterIndex();
+        buffer.setByte(0, TYPE_VALUE);
+        switch (LENGTH) {
+            case 1:
+                buffer.setByte(1, (byte)value);
+                break;
+            case 2:
+                buffer.setUnsignedShort(1, value);
+                break;
+            case 3:
+                buffer.setThreeOctetInt(1, value);
+                break;
+            case 4:
+                buffer.setInt(1, value);
+                break;
+            default:
+                // TODO: should we perhaps just put the int at the very end?
+                //      Not sure this case actually exists so until we find a TV that
+                //      does this then let's play it safe and error out.
+                throw new IllegalArgumentException("Unable to set an integer for a " +
+                        "Type Value information element that is " + LENGTH + " long");
+
+        }
+
+        final var raw = RawTypeLengthValue.frame(buffer.build());
+        final var typeValue = {{java.tv.type}}.parse(raw.getValue().getBuffer());
+        return new DefaultRecovery(typeValue, raw);
+    }
+    {% endif %}
+
+    @Override
+    default {{java.tv.name}} ensure() {
+        return this;
+    }
+
+    class Default{{java.tv.name}} extends BaseTypeLengthValue<{{java.tv.type}}> implements {{java.tv.name}} {
+        private Default{{java.tv.name}}(final {{java.tv.type}} value, final RawTypeLengthValue raw) {
+            super(TYPE_VALUE, value, raw);
+        }
+    }
+}
+

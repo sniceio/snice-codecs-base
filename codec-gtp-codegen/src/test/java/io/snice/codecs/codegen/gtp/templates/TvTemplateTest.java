@@ -7,14 +7,13 @@ import org.junit.Test;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 
-public class TlivTemplateTest {
+public class TvTemplateTest {
 
     @Test
     public void testLoadTemplate() throws Exception {
         final var template = TlivTemplate.load();
         final var ies = CodeGen.loadInfoElementMetaData();
         final String rendered = template.render(ClassNameConverter.defaultConverter(), ies.get(1));
-        System.out.println(rendered);
         assertThat(rendered.length() > 0, CoreMatchers.is(true));
     }
 

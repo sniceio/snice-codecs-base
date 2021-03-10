@@ -1,0 +1,50 @@
+package {{package}};
+
+import io.snice.buffer.Buffer;
+import io.snice.codecs.codec.gtp.GtpParseException;
+import io.snice.codecs.codec.gtp.gtpc.v2.type.GtpType;
+import io.snice.codecs.codec.gtp.gtpc.v2.tliv.impl.RawTypeLengthInstanceValue;
+
+/**
+ * This file has been auto generated. Do not manually edit.
+ * Please see the readme file in the codegen directory
+ * for how to update and generate this file.
+ *
+ * @author jonas@jonasborjesson.com
+ */
+public class TypeValueFramer {
+
+    public static TypeValue<? extends GtpType> frame(final Buffer buffer) {
+        final var b = buffer.getByte(0);
+        switch (b) {
+  {%- for element in elements %}
+            case ({{element.name}}.TYPE_VALUE):
+                return {{element.name}}.frame(buffer);
+  {%- endfor %}
+            default:
+                throw new GtpParseException("Unknown GTPv1 Type Value");
+        }
+    }
+
+    static TypeValue<? extends GtpType> frame(final RawTypeValue raw) {
+        switch (raw.getType()) {
+  {%- for element in elements %}
+            case ({{element.name}}.TYPE_VALUE):
+                return {{element.name}}.frame(raw);
+  {%- endfor %}
+            default:
+                throw new GtpParseException("Unknown GTPv1 Type Length value");
+        }
+    }
+
+    public static int getLength(final byte type) {
+        switch (type) {
+  {%- for element in elements %}
+            case ({{element.name}}.TYPE_VALUE):
+                return {{element.name}}.LENGTH;
+  {%- endfor %}
+            default:
+                throw new GtpParseException("Unknown GTPv1 Type Length value");
+        }
+    }
+}

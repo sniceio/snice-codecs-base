@@ -5,8 +5,18 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.module.SimpleModule;
 import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
 import com.fasterxml.jackson.datatype.jdk8.Jdk8Module;
+import io.snice.codecs.codec.gtp.v1.common.Format;
 import io.snice.codecs.codegen.ClassNameConverter;
-import io.snice.codecs.codegen.gtp.templates.*;
+import io.snice.codecs.codegen.gtp.templates.Gtpv1InformationElementsTemplate;
+import io.snice.codecs.codegen.gtp.templates.Gtpv1MessageTypeTemplate;
+import io.snice.codecs.codegen.gtp.templates.InfoElementTemplate;
+import io.snice.codecs.codegen.gtp.templates.MessageTypeTemplate;
+import io.snice.codecs.codegen.gtp.templates.TlivFramerTemplate;
+import io.snice.codecs.codegen.gtp.templates.TlivTemplate;
+import io.snice.codecs.codegen.gtp.templates.TlvFramerTemplate;
+import io.snice.codecs.codegen.gtp.templates.TlvTemplate;
+import io.snice.codecs.codegen.gtp.templates.TvFramerTemplate;
+import io.snice.codecs.codegen.gtp.templates.TvTemplate;
 import liqp.RenderSettings;
 import liqp.Template;
 import org.slf4j.Logger;
@@ -16,7 +26,12 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URL;
-import java.nio.file.*;
+import java.nio.file.FileSystem;
+import java.nio.file.FileSystemAlreadyExistsException;
+import java.nio.file.FileSystems;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -25,6 +40,8 @@ import java.util.List;
 public class CodeGen {
 
     private static final String GTPC_V1_PACKAGE_NAME = "io.snice.codecs.codec.gtp.gtpc.v1";
+    private static final String GTPC_V1_TV_PACKAGE_NAME = GTPC_V1_PACKAGE_NAME + ".ie.tv";
+    private static final String GTPC_V1_TLV_PACKAGE_NAME = GTPC_V1_PACKAGE_NAME + ".ie.tlv";
 
     private static final String GTPC_V2_PACKAGE_NAME = "io.snice.codecs.codec.gtp.gtpc.v2";
     private static final String GTPC_V2_TLIV_PACKAGE_NAME = GTPC_V2_PACKAGE_NAME + ".tliv";
@@ -41,6 +58,10 @@ public class CodeGen {
 
     public static List<Gtpv1MessageTypeMetaData> loadGtpv1MessageTypeMetaData() throws Exception {
         return loadSpec(Gtpv1MessageTypeMetaData.class, "specifications/gtpv1_message_types.yml");
+    }
+
+    public static List<Gtpv1InfoElementMetaData> loadGtpv1InfoElementMetaData() throws Exception {
+        return loadSpec(Gtpv1InfoElementMetaData.class, "specifications/gtpv1_information_elements.yml");
     }
 
     public static Template loadTemplate(final String file) throws Exception {
@@ -92,6 +113,29 @@ public class CodeGen {
         final String gtpv1MessagesTypes = Gtpv1MessageTypeTemplate.load().render(loadGtpv1MessageTypeMetaData());
         save(outputDirectory, GTPC_V1_PACKAGE_NAME, "Gtp1MessageType", gtpv1MessagesTypes);
 
+        final var tvs = loadGtpv1InfoElementMetaData();
+        final String gtpv1InfoElements = Gtpv1InformationElementsTemplate.load().render(tvs);
+        save(outputDirectory, GTPC_V1_PACKAGE_NAME, "Gtp1InfoElement", gtpv1InfoElements);
+
+        // Render Type Value Information elements and the corresponding framer
+        final var tvTemplate = TvTemplate.load();
+        tvs.stream().filter(tv -> tv.getFormat() == Format.TV).forEach(tv -> {
+            final var result = tvTemplate.render(classNameConverter, GTPC_V1_TV_PACKAGE_NAME, tv);
+            save(outputDirectory, GTPC_V1_TV_PACKAGE_NAME, result.getJavaClassName(), result.getResult());
+        });
+
+        final String typeValueFramer = TvFramerTemplate.load().render(classNameConverter, GTPC_V1_TV_PACKAGE_NAME, tvs);
+        save(outputDirectory, GTPC_V1_TV_PACKAGE_NAME, "TypeValueFramer", typeValueFramer);
+
+        // Render Type Length Value Information elements and the corresponding framer
+        final var tlvTemplate = TlvTemplate.load();
+        tvs.stream().filter(tv -> tv.getFormat() == Format.TLV).forEach(tv -> {
+            final var result = tlvTemplate.render(classNameConverter, GTPC_V1_TLV_PACKAGE_NAME, tv);
+            save(outputDirectory, GTPC_V1_TLV_PACKAGE_NAME, result.getJavaClassName(), result.getResult());
+        });
+
+        final String typeLengthValueFramer = TlvFramerTemplate.load().render(classNameConverter, GTPC_V1_TLV_PACKAGE_NAME, tvs);
+        save(outputDirectory, GTPC_V1_TLV_PACKAGE_NAME, "TypeLengthValueFramer", typeLengthValueFramer);
     }
 
     private static void save(final Path outpuDirectory, final String javaPackageName, final String javaName, final String content) {

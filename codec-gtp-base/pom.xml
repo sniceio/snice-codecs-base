@@ -10,10 +10,10 @@
         <version>0.0.5</version>
     </parent>
 
-    <name>Common Utils Library</name>
-    <artifactId>codec-codegen-common</artifactId>
+    <name>GTP Base Library</name>
+    <artifactId>codec-gtp-base</artifactId>
     <packaging>jar</packaging>
-    <description>Just some common classes for all codegen libraries</description>
+    <description />
 
     <dependencies>
 

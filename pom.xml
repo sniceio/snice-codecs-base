@@ -15,7 +15,7 @@
     <name>Snice Networking</name>
     <groupId>io.snice.codecs</groupId>
     <artifactId>codecs-base-parent</artifactId>
-    <version>0.0.7-SNAPSHOT</version>
+    <version>0.0.7</version>
     <packaging>pom</packaging>
     <description>Snice Codecs Base - The base of many Snice Codecs</description>
     <licenses>
@@ -38,7 +38,7 @@
         <connection>scm:git:git@github.com:sniceio/snice-codecs-base.git</connection>
         <developerConnection>scm:git:git@github.com:sniceio/snice-codecs-base.git</developerConnection>
         <url>git@github.com:sniceio/snice-codecs-base.git</url>
-        <tag>HEAD</tag>
+        <tag>snice-codecs-base-release-0.0.7</tag>
     </scm>
 
     <properties>

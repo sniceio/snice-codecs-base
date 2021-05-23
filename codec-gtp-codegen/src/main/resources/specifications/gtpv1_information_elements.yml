@@ -10,6 +10,7 @@
   numberOfFixedOctets: 8
   reference: 7.7.2
   type: 2
+  typeImpl: ImsiType
 - format: TV
   informationElement: Routeing Area Identity (RAI)
   lengthType: Fixed

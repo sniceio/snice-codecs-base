@@ -15,6 +15,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 
 import static io.snice.codecs.codegen.FileSystemUtils.ensureFileSystem;
+import static io.snice.codecs.codegen.FileSystemUtils.prepareOutputDirectory;
 
 /**
  *
@@ -64,19 +65,4 @@ public class DiameterMojo extends AbstractMojo {
         }
     }
 
-    /**
-     * Ensure that the source output directory is valid, if not, complain and bail.
-     */
-    private static void prepareOutputDirectory(final File outputDirectory) {
-        if (!outputDirectory.exists()) {
-            outputDirectory.mkdirs();
-        }
-
-        if (!outputDirectory.exists()) {
-            throw new IllegalArgumentException("The given output directory " + outputDirectory
-                    + " is not valid. Cannot generate the sources here");
-
-        }
-
-    }
 }

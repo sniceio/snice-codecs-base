@@ -1,6 +1,6 @@
 package io.snice.codecs.plugin;
 
-import io.snice.codecs.codegen.gtp.CodeGen;
+import io.snice.codecs.codegen.common.CodeGen;
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
@@ -17,11 +17,11 @@ import java.io.File;
  * @author jonas@jonasborjesson.com
  */
 @Mojo(
-        name = "gtp",
+        name = "codecs-common",
         defaultPhase = LifecyclePhase.GENERATE_SOURCES,
         requiresDependencyResolution = ResolutionScope.COMPILE,
         requiresProject = true)
-public class GtpMojo extends AbstractMojo {
+public class CodecsCommonMojo extends AbstractMojo {
 
     /**
      * The current Maven project.
@@ -32,18 +32,19 @@ public class GtpMojo extends AbstractMojo {
     /**
      * Specify output directory where the Java files are generated.
      */
-    @Parameter(defaultValue = "${project.build.directory}/generated-sources/codec-gtp")
+    @Parameter(defaultValue = "${project.build.directory}/generated-sources/codec-common")
     private File outputDirectory;
 
 
     @Override
     public void execute() throws MojoExecutionException, MojoFailureException {
         final var logger = getLog();
-        logger.info("Generating GTP Code");
+        logger.info("Generating Common Codecs Code");
         prepareOutputDirectory(outputDirectory);
 
         try {
-            CodeGen.execute(outputDirectory.toPath());
+            final var codeGen = new CodeGen();
+            codeGen.execute(outputDirectory.toPath());
         } catch (final Exception e) {
             throw new MojoExecutionException("Unable to generate the code", e);
         }

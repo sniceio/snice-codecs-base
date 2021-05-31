@@ -23,14 +23,6 @@ public class TlivFramerTemplate {
     }
 
     public String render(final ClassNameConverter converter, final List<Gtpv2InfoElementMetaData> ies) {
-        /*
-        final var attributes = new HashMap<String, Object>();
-        final var elements = new ArrayList<>();
-        ies.forEach(elements::add);
-        attributes.put("elements", elements);
-        return template.render(attributes);
-         */
-
         final var attributes = new HashMap<String, Object>();
         final var elements = new ArrayList<>();
         attributes.put("elements", elements);

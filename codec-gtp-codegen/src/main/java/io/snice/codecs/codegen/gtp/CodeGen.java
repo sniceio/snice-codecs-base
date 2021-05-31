@@ -22,20 +22,15 @@ import liqp.Template;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.File;
-import java.io.IOException;
-import java.net.URI;
-import java.net.URL;
-import java.nio.file.FileSystem;
-import java.nio.file.FileSystemAlreadyExistsException;
-import java.nio.file.FileSystems;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
+
+import static io.snice.codecs.codegen.FileSystemUtils.getURL;
+import static io.snice.codecs.codegen.FileSystemUtils.save;
 
 public class CodeGen {
 
@@ -65,17 +60,11 @@ public class CodeGen {
     }
 
     public static Template loadTemplate(final String file) throws Exception {
-        final var url = CodeGen.getURL(file);
+        final var url = getURL(file);
         final var p = Paths.get(url.toURI());
         final var liquid = Files.readString(p);
         final RenderSettings settings = new RenderSettings.Builder().withStrictVariables(false).build();
         return Template.parse(liquid).withRenderSettings(settings);
-    }
-
-    public static URL getURL(final String file) throws Exception {
-        final var url = Thread.currentThread().getContextClassLoader().getResource(file);
-        ensureFileSystem(url.toURI());
-        return url;
     }
 
     public static <C> List<C> loadSpec(final Class<C> clz, final String file) throws Exception {
@@ -136,32 +125,6 @@ public class CodeGen {
 
         final String typeLengthValueFramer = TlvFramerTemplate.load().render(classNameConverter, GTPC_V1_TLV_PACKAGE_NAME, tvs);
         save(outputDirectory, GTPC_V1_TLV_PACKAGE_NAME, "TypeLengthValueFramer", typeLengthValueFramer);
-    }
-
-    private static void save(final Path outpuDirectory, final String javaPackageName, final String javaName, final String content) {
-        final Path packageDir = outpuDirectory.resolve(javaPackageName.replaceAll("\\.", File.separator));
-        final Path fullFileName = packageDir.resolve(javaName + ".java");
-        logger.debug("Saving {} as {}", javaName, fullFileName);
-        try {
-            Files.createDirectories(packageDir);
-            Files.write(fullFileName, content.getBytes());
-        } catch (final IOException e) {
-            throw new RuntimeException("Unable to save " + fullFileName + " to " + packageDir, e);
-        }
-    }
-
-    public static FileSystem ensureFileSystem(final URI uri) {
-        try {
-            if ("jar".equals(uri.getScheme())) {
-                final var env = new HashMap<String, Object>();
-                env.put("create", "true");
-                return FileSystems.newFileSystem(uri, env);
-            }
-        } catch(final FileSystemAlreadyExistsException | IOException e) {
-            // ignore
-        }
-
-        return FileSystems.getDefault();
     }
 
 

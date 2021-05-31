@@ -1,0 +1,205 @@
+package io.snice.codecs.codec.gtp.gtpc.v1;
+
+import io.snice.buffer.Buffer;
+import io.snice.buffer.Buffers;
+import io.snice.buffer.WritableBuffer;
+import io.snice.preconditions.PreConditions;
+
+import java.util.Optional;
+
+import static io.snice.preconditions.PreConditions.assertArgument;
+import static io.snice.preconditions.PreConditions.assertNotEmpty;
+import static java.lang.Character.isDigit;
+
+/**
+ * This file has been auto generated. Do not manually edit.
+ * Please see the readme file in the codegen directory
+ * for how to update and generate this file.
+ *
+ * @author jonas@jonasborjesson.com
+ */
+public enum E212 {
+
+    /**
+     * Note: In java, a method can not exceed 64k in size or else the compiler with error out stating code too large.
+     * This stems from an early design decision (apparently) and since the enum declaration is essentially static
+     * block, it'll apply to the below definitions too. Therefore, in order to minimize the "static block", we are
+     * bending over backwards to fetch the friendly names of the MCC and MNCs etc. It is somewhat dumb but
+     * it is what it is. Originally, all of those were just parameters into the enum but again, we were way way
+     * over the 64k limit.
+     */
+    E212_00101("00101"),
+    E212_001001("001001"),
+    {% for mccMnc in mccMncs -%}
+    E212_{{mccMnc['mccMnc']}}("{{mccMnc['mccMnc']}}"){%- if mccMnc['mccMnc'] == mccMncs.last['mccMnc'] %};{% else %},{% endif %}
+    {% endfor %}
+
+    /**
+     *
+     * This is to overcome the limitations of 64k per code block in Java.
+     */
+    private static String getMccFriendlyName(final int mcc) {
+        switch (mcc) {
+            case 1: return "Test";
+            {%- for mcc in mccs %}
+               {%- if mcc['friendlyName'] != "Unassigned" %}
+            case {{mcc['mcc']}}: return "{{mcc['friendlyName']}}";
+               {%- endif %}
+            {%- endfor %}
+            default: return "Unassigned";
+        }
+    }
+
+    /**
+     * This is to overcome the limitations of 64k per code block in Java.
+     */
+    private static String getMncFriendlyName(final int mccMnc) {
+        switch (mccMnc) {
+            case 101: return "Test Network";
+            case 1001: return "Test Network";
+            {% for mccMnc in mccMncs -%}
+            case {{mccMnc['mccMnc']}}: return "{{mccMnc['friendlyName']}}";
+            {% endfor %}
+            default: return "Unknown";
+        }
+    }
+
+    /**
+     * This is to overcome the limitations of 64k per code block in Java.
+     */
+    public static E212 lookup(final int mccMnc) {
+        switch (mccMnc) {
+            case 101: return E212_00101;
+            case 1001: return E212_001001;
+            {% for mccMnc in mccMncs -%}
+            case {{mccMnc['mccMnc']}}: return E212_{{mccMnc['mccMnc']}};
+            {% endfor -%}
+            default: return null;
+        }
+    }
+
+    public static Buffer encodeMccMnc(final String mcc, final String mnc) {
+        assertArgument(mcc != null && mcc.length() == 3, "The MCC must be exactly 3 digits long");
+        assertArgument(mnc != null && (mnc.length() == 2 || mnc.length() == 3) , "The MNC must be either 2 or 3 digits long");
+
+        assertArgument(isDigit(mcc.charAt(0)) && isDigit(mcc.charAt(1)) && isDigit(mcc.charAt(2)), "The MCC must be all digits");
+        assertArgument(isDigit(mnc.charAt(0)) && isDigit(mnc.charAt(1)), "The MNC must be all digits");
+        if (mnc.length() == 3) {
+            assertArgument(isDigit(mnc.charAt(2)), "The MNC must be all digits");
+        }
+
+        return encodeMccMncInternal(mcc, mnc);
+    }
+
+    private static Buffer encodeMccMncInternal(final String mcc, final String mnc) {
+        final int mccDigit1 = mcc.charAt(0) - '0';
+        final int mccDigit2 = mcc.charAt(1) - '0';
+        final int mccDigit3 = mcc.charAt(2) - '0';
+
+        final int mncDigit1 = mnc.charAt(0) - '0';
+        final int mncDigit2 = mnc.charAt(1) - '0';
+        final int mncDigit3 = mnc.length() == 3 ? mnc.charAt(2) - '0' : -1;
+
+        final var buffer = WritableBuffer.of(3).fastForwardWriterIndex();
+
+        final var a0 = mccDigit2 << 4;
+        final var b0 = (mccDigit1 & 0x0F);
+        buffer.setByte(0, (byte)(a0 + b0));
+
+        // if we don't have a 3rd mnc digit, those bytes are set to 1111b
+        // according to spec
+        final var a1 = mncDigit3 == -1 ? 0xF0 : mncDigit3 << 4;
+        final var b1 = (mccDigit3 & 0x0F);
+        buffer.setByte(1, (byte)(a1 + b1));
+
+        final var a2 = mncDigit2 << 4;
+        final var b2 = (mncDigit1 & 0x0F);
+        buffer.setByte(2, (byte)(a2 + b2));
+        return buffer.build();
+    }
+
+    private final int mcc;
+    private final String mccStr;
+    private final String mccFriendlyName;
+
+    private final int mnc;
+    private final String mncStr;
+    private final String mncFriendlyName;
+
+    private final String mccMnc;
+
+    private final Buffer encoded;
+
+    /**
+     * How many nibbles (4-bits = half a byte) is this MCC/MNC consuming? We need to know
+     * this when encode the MCC/MNC into e.g. an IMSI. Since each digit in an MCC/MNC is
+     * TBCD encoded, it means that each digit takes up 4 bits. Hence, the number of nibbles
+     * is simply the same as the number of digits.
+     */
+    private final int nibbles;
+
+    E212(final String mccMnc) {
+        this.mccStr = mccMnc.substring(0, 3);
+        this.mcc = Integer.parseInt(mccStr);
+        this.mccFriendlyName = getMccFriendlyName(mcc);
+
+        this.mncStr = mccMnc.substring(3);
+        this.mnc = Integer.parseInt(mncStr);
+        this.mncFriendlyName = getMncFriendlyName(Integer.parseInt(mccMnc));
+        this.mccMnc = mccMnc;
+
+        this.encoded = encodeMccMncInternal(mccStr, mncStr);
+        this.nibbles = mccMnc.length();
+    }
+
+    public String getMcc() {
+        return mccStr;
+    }
+
+    public int getMccAsInt() {
+        return mcc;
+    }
+
+    public String getMccFriendlyName() {
+        return mccFriendlyName;
+    }
+
+    public String getMnc() {
+        return mncStr;
+    }
+
+    public int getMncAsInt() {
+        return mnc;
+    }
+
+    public String getMncFriendlyName() {
+        return mncFriendlyName;
+    }
+
+    public String getMccMnc() {
+        return mccMnc;
+    }
+
+    public int getNoOfNibbles() {
+        return nibbles;
+    }
+
+    /**
+     * Return the MCC/MNC as a string of format <mccmnc>, unlike the {@link #toString()}
+     * that returns with extra information about the MCC and MNC friendly names. Hence, the
+     * toString version is more for human consumption/debugging.
+     */
+    public String getAsString() {
+        return mccMnc;
+    }
+
+    @Override
+    public String toString() {
+        return mccMnc + "(" + mccFriendlyName + ":" + mncFriendlyName + ")";
+    }
+
+    public Buffer getEncoded() {
+        return encoded;
+    }
+
+}

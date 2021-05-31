@@ -10,7 +10,7 @@
   friendly_name: International Mobile Subscriber Identity (IMSI)
   octets: -1
   type: 1
-  type_impl: TbcdType
+  type_impl: ImsiType
 - comment: "Variable Length / 8.4"
   enum: CAUSE
   extendable: false

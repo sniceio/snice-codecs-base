@@ -2,7 +2,7 @@ name: Build, Test & Release
 
 on:
   push:
-    branches: [ "main" ]
+    branches: [ $default-branch ]
 
 jobs:
   build:

@@ -7,7 +7,7 @@
     <parent>
         <groupId>io.snice.codecs</groupId>
         <artifactId>codecs-base-parent</artifactId>
-        <version>0.0.10-SNAPSHOT</version>
+        <version>0.0.10</version>
     </parent>
 
     <name>Diamter Codegen</name>
